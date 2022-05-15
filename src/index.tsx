@@ -1,14 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
+// styles
+import "./styles/index.scss";
+// components
+import MainMenu from "./components/MainMenu";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <p>Woohoo! The adventure of HOKM begins!</p>
+    <h1>حکم</h1>
+    <MainMenu />
   </React.StrictMode>
 );
 
