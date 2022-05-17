@@ -1,9 +1,15 @@
 import React from "react";
+// next
+import Link from "next/link";
 
 const MainMenu = (): JSX.Element => (
   <div>
-    <button>دو نفره</button>
-    <button>چهار نفره</button>
+    <Link href={`/2players`}>
+      <button>دو نفره</button>
+    </Link>
+    <Link href={`/4players`}>
+      <button>چهار نفره</button>
+    </Link>
   </div>
 );
 
