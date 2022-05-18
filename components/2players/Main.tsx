@@ -1,5 +1,5 @@
 import React from "react";
 
-const Main2Players = () => <div>2 Players</div>;
+const Main2Players = () => <div>دو نفره</div>;
 
 export default Main2Players;
