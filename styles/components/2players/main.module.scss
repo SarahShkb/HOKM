@@ -1,0 +1,73 @@
+@import "styles/variables.scss";
+
+.bg_container {
+  width: 100%;
+  height: 100vh;
+  background-image: url("../../../assets/images/mainmenu_background.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+
+  .main_container {
+    background: rgba(00, 00, 00, 0.7);
+    width: 100%;
+    height: 100%;
+    padding: 3rem;
+    display: flex;
+
+    .choose_HAKEM_button {
+      margin: auto;
+      background-color: transparent;
+      border: 0.125rem solid white;
+      border-radius: 1rem;
+      color: white;
+      font-family: unset;
+      padding: 0.5rem 4rem;
+      font-weight: bold;
+      font-size: 1.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        border-color: gold;
+        color: gold;
+        cursor: pointer;
+        .crown_icon_wrapper {
+          svg {
+            g {
+              fill: gold;
+            }
+          }
+        }
+      }
+      .crown_icon_wrapper {
+        margin: 1rem;
+        margin-bottom: 0;
+        svg {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .bg_container {
+    .main_container {
+      .choose_HAKEM_button {
+        padding: 0.5rem 2rem;
+        font-size: 1rem;
+        display: flex;
+        .crown_icon_wrapper {
+          margin: 1rem;
+          margin-bottom: 0;
+          svg {
+            width: 2rem;
+            height: 2rem;
+          }
+        }
+      }
+    }
+  }
+}
