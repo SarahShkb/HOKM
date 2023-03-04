@@ -1,4 +1,4 @@
-export type cardType = {
+export type CardType = {
   suit: number;
   rank: number;
 };

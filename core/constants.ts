@@ -1,5 +1,3 @@
-import { cardType } from "core/types";
-
 export const suits = {
   SPADES: 1,
   CLUBS: 2,
@@ -23,10 +21,9 @@ export const ranks = {
   ACE: 14,
 };
 
-export const cards: cardType[] = Object(suits).keys.map(
-  (suit: number) =>
-    Object(ranks).map((rank: number) => ({
-      suit,
-      rank,
-    }))
-);
+export const players = {
+  PLAYER_1: 1,
+  PLAYER_2: 2,
+  PLAYER_3: 3,
+  PLAYER_4: 4,
+};

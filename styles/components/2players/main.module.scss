@@ -3,7 +3,8 @@
 .bg_container {
   width: 100%;
   height: 100vh;
-  background-image: url("../../../assets/images/mainmenu_background.jpg");
+  background-color: maroon;
+  background-image: linear-gradient(to bottom right, #d57373, maroon);
   background-size: cover;
   background-position: center;
   color: white;
@@ -48,6 +49,13 @@
           height: 2.5rem;
         }
       }
+    }
+    .hakem_detector_card {
+      position: absolute;
+      margin-right: auto;
+      margin-left: auto;
+      color: gold;
+      font-size: 1.5rem;
     }
   }
 }
