@@ -15,7 +15,7 @@ const Main2Players = () => {
   const cards = getCards();
   let hakemCounter = 0;
   const [chooseHAKEM, setChooseHAKEM] = useState<boolean>(false);
-  const [hakem, setChosen] = useState<number>(0);
+  const [hakem, setHakem] = useState<number>(-1);
   const [currentHakemCardsState, setCurrentHakemCardsState] = useState<
     CardType[]
   >([]);
@@ -24,7 +24,7 @@ const Main2Players = () => {
     if (chooseHAKEM) {
       let tempCards = [...cards];
       const chooseHakemInterval = setInterval(() => {
-        const randomCardIndex = Math.round(Math.random() * tempCards.length);
+        const randomCardIndex = Math.floor(Math.random() * tempCards.length);
         const pulledCard = tempCards[randomCardIndex];
         let currentHakemCards = { ...currentHakemCardsState };
 
@@ -32,7 +32,7 @@ const Main2Players = () => {
         setCurrentHakemCardsState(currentHakemCards);
 
         if (pulledCard.rank === ranks.ACE) {
-          setChosen(hakemCounter % 2);
+          setHakem(hakemCounter % 2);
           clearInterval(chooseHakemInterval);
         }
         tempCards.splice(randomCardIndex, 1);
@@ -43,7 +43,7 @@ const Main2Players = () => {
   return (
     <div className={classes.bg_container}>
       <div className={classes.main_container}>
-        {!chooseHAKEM && !hakem && (
+        {!chooseHAKEM && hakem < 0 && (
           <button
             className={classes.choose_HAKEM_button}
             onClick={() => setChooseHAKEM(true)}
@@ -53,6 +53,21 @@ const Main2Players = () => {
               <CrownIcon />
             </div>
           </button>
+        )}
+        {hakem >= 0 && (
+          <div className={classes.hakem_announcement}>
+            <p>
+              <CrownIcon />
+              حاکم، بازیکن شماره{" "}
+              <span className={classes.hakem_player_number}>{`${
+                hakem + 1
+              }`}</span>{" "}
+              است!
+            </p>
+            <button className={classes.start_game_button} onClick={() => {}}>
+              {"شروع بازی"}
+            </button>
+          </div>
         )}
         {chooseHAKEM && (
           <>
