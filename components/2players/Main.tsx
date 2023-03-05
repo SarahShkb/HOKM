@@ -5,6 +5,8 @@ import CrownIcon from "assets/icons/Crown";
 import { ranks, players } from "core/constants";
 // modules
 import { getCards } from "core/modules/generalHelperFunctions";
+// components
+import Card from "components/general/Card";
 // styles
 import classes from "styles/components/2players/main.module.scss";
 import { CardType } from "core/types";
@@ -58,13 +60,23 @@ const Main2Players = () => {
               className={classes.hakem_detector_card}
               style={{ top: "100px" }}
             >
-              {currentHakemCardsState[0]?.rank}
+              {currentHakemCardsState[0] && (
+                <Card
+                  suit={currentHakemCardsState[0]?.suit}
+                  rank={currentHakemCardsState[0]?.rank}
+                />
+              )}
             </div>
             <div
               className={classes.hakem_detector_card}
               style={{ bottom: "100px" }}
             >
-              {currentHakemCardsState[1]?.rank}
+              {currentHakemCardsState[1] && (
+                <Card
+                  suit={currentHakemCardsState[1]?.suit}
+                  rank={currentHakemCardsState[1]?.rank}
+                />
+              )}
             </div>
           </>
         )}
