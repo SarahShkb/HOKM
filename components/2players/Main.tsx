@@ -85,6 +85,11 @@ const Main2Players = () => {
                 />
               )}
             </div>
+            {hakem < 0 && (
+              <div className={classes.pile_of_cards}>
+                <Card rank={null} suit={null} back />
+              </div>
+            )}
             <div
               className={classes.hakem_detector_card}
               style={{ bottom: "100px" }}

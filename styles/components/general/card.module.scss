@@ -9,6 +9,11 @@
   width: 7rem;
   height: 10rem;
 
+  &.back {
+    background-image: url("../../../assets//images/card-back-light.png");
+    background-size: cover;
+  }
+
   .rank {
     font-size: 1.25rem;
     position: absolute;
