@@ -23,13 +23,16 @@ const Main2Players = () => {
   useEffect(() => {
     if (chooseHAKEM) {
       let tempCards = [...cards];
+
       const chooseHakemInterval = setInterval(() => {
         const randomCardIndex = Math.floor(Math.random() * tempCards.length);
         const pulledCard = tempCards[randomCardIndex];
-        let currentHakemCards = { ...currentHakemCardsState };
 
-        currentHakemCards[hakemCounter % 2] = pulledCard;
-        setCurrentHakemCardsState(currentHakemCards);
+        setCurrentHakemCardsState((prevState) => {
+          let currentHakemCards = [...prevState];
+          currentHakemCards[hakemCounter % 2] = pulledCard;
+          return currentHakemCards;
+        });
 
         if (pulledCard.rank === ranks.ACE) {
           setHakem(hakemCounter % 2);

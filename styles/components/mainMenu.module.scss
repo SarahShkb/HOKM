@@ -8,6 +8,8 @@
   background-position: center;
   color: white;
   padding: 3rem;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     font-size: 5.5rem;
@@ -19,6 +21,7 @@
     flex-direction: column;
     margin-top: 5rem;
     margin-left: 25%;
+    align-self: flex-end;
 
     button {
       background-color: transparent;

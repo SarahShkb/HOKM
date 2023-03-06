@@ -70,6 +70,9 @@
       position: absolute;
       margin-right: auto;
       margin-left: auto;
+      width: calc(100% - 6rem);
+      display: flex;
+      justify-content: center;
     }
   }
 }
