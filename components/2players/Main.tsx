@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // icons
 import CrownIcon from "assets/icons/Crown";
 // constants
@@ -19,6 +19,12 @@ const Main2Players = () => {
   const [currentHakemCardsState, setCurrentHakemCardsState] = useState<
     CardType[]
   >([]);
+  const [movingCardTop, setMovingCardTop] = useState<number>(null);
+
+  const player1Ref = useRef(null);
+  const player2Ref = useRef(null);
+
+  console.log(player1Ref, player2Ref);
 
   useEffect(() => {
     if (chooseHAKEM) {
@@ -27,6 +33,13 @@ const Main2Players = () => {
       const chooseHakemInterval = setInterval(() => {
         const randomCardIndex = Math.floor(Math.random() * tempCards.length);
         const pulledCard = tempCards[randomCardIndex];
+
+        setMovingCardTop(
+          (hakemCounter % 2 === 0 ? player1Ref : player2Ref).current.offsetTop
+        );
+        setTimeout(() => {
+          setMovingCardTop(null);
+        }, 500);
 
         setCurrentHakemCardsState((prevState) => {
           let currentHakemCards = [...prevState];
@@ -77,6 +90,7 @@ const Main2Players = () => {
             <div
               className={classes.hakem_detector_card}
               style={{ top: "100px" }}
+              ref={player2Ref}
             >
               {currentHakemCardsState[0] && (
                 <Card
@@ -88,11 +102,20 @@ const Main2Players = () => {
             {hakem < 0 && (
               <div className={classes.pile_of_cards}>
                 <Card rank={null} suit={null} back />
+                <div
+                  className={classes.moving_card}
+                  style={
+                    movingCardTop ? { top: movingCardTop } : { display: "none" }
+                  }
+                >
+                  <Card rank={null} suit={null} back />
+                </div>
               </div>
             )}
             <div
               className={classes.hakem_detector_card}
               style={{ bottom: "100px" }}
+              ref={player1Ref}
             >
               {currentHakemCardsState[1] && (
                 <Card

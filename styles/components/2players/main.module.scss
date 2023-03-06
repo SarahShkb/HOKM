@@ -80,6 +80,11 @@
       align-items: center;
       display: flex;
       justify-content: center;
+      .moving_card {
+        position: absolute;
+        transition: all 0.5s ease-in-out;
+        z-index: 100;
+      }
     }
   }
 }
