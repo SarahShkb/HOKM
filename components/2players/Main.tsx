@@ -55,9 +55,13 @@ const Main2Players = () => {
           return currentHakemCards;
         });
 
-        if (pulledCard.rank === ranks.ACE) {
-          // setHakem(hakemCounter % 2);
-          // clearInterval(chooseHakemInterval);
+        // if (pulledCard.rank === ranks.ACE) {
+        //   // setHakem(hakemCounter % 2);
+        //   // clearInterval(chooseHakemInterval);
+        // }
+        if (hakemCounter === 10) {
+          //setHakem(hakemCounter % 2);
+          clearInterval(chooseHakemInterval);
         }
         tempCards.splice(randomCardIndex, 1);
         cardsRef.current.pop();
@@ -118,7 +122,12 @@ const Main2Players = () => {
                     className={classes.in_pile_card}
                     style={{
                       top: movingCardTops[index],
-                      zIndex: 10000 + index,
+                      zIndex:
+                        cardsRef.current[index]?.offsetTop ===
+                        pileOfCards?.current?.offsetTop - 80
+                          ? 10000 - index
+                          : 1000 + index,
+                      display: index === 0 ? "none" : "initial",
                     }}
                   >
                     <Card rank={null} suit={null} back />
