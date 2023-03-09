@@ -80,10 +80,11 @@
       align-items: center;
       display: flex;
       justify-content: center;
-      .moving_card {
+      //z-index: -1;
+      .in_pile_card {
+        //z-index: 1000;
         position: absolute;
         transition: all 0.5s ease-in-out;
-        z-index: 100;
       }
     }
   }
