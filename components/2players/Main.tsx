@@ -44,29 +44,29 @@ const Main2Players = () => {
 
         setMovingCardTops((prevArray) => {
           let tempArr = [...prevArray];
-          tempArr[hakemCounter] = (
+          tempArr[hakemCounter + 1] = (
             hakemCounter % 2 === 0 ? player1Ref : player2Ref
           )?.current?.offsetTop;
           return tempArr;
         });
+        setTimeout(() => {}, 100);
         setCurrentHakemCardsState((prevState) => {
           let currentHakemCards = [...prevState];
           currentHakemCards[hakemCounter % 2] = pulledCard;
           return currentHakemCards;
         });
 
-        // if (pulledCard.rank === ranks.ACE) {
-        //   // setHakem(hakemCounter % 2);
-        //   // clearInterval(chooseHakemInterval);
-        // }
-        if (hakemCounter === 10) {
-          //setHakem(hakemCounter % 2);
+        if (pulledCard.rank === ranks.ACE) {
+          setHakem(hakemCounter % 2);
           clearInterval(chooseHakemInterval);
         }
+        // if (hakemCounter === 10) {
+        //   //setHakem(hakemCounter % 2);
+        //   clearInterval(chooseHakemInterval);
+        // }
         tempCards.splice(randomCardIndex, 1);
         cardsRef.current.pop();
         hakemCounter++;
-        setTimeout(() => {}, 100);
       }, 1000);
     }
   }, [chooseHAKEM]);
