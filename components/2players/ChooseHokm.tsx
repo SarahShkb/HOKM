@@ -22,38 +22,71 @@ const ChooseHokm = ({
   player2Ref,
 }: ChooseHokmType) => {
   const cards = getCards();
-  let hakemCounter = 0;
-  const [currentHakemCardsState, setCurrentHakemCardsState] = useState<
-    CardType[]
-  >([]);
-  const [movingCardTops, setMovingCardTops] = useState<number[]>([null]);
-  const [player1RandomInitialCards, setPlayer1RandomInitialCards] = useState<
-    CardType[]
-  >([]);
-  const [player2RandomInitialCards, setPlayer2RandomInitialCards] = useState<
-    CardType[]
-  >([]);
+  const [player1RandomInitialCards, setPlayer1RandomInitialCards] = useState<{
+    cards: CardType[];
+    hovered: boolean[];
+  }>({ cards: [], hovered: [] });
+  const [player2RandomInitialCards, setPlayer2RandomInitialCards] = useState<{
+    cards: CardType[];
+    hovered: boolean[];
+  }>({ cards: [], hovered: [] });
+
+  // handlers
+  const handlePlayer1CardHover = (index: number, hovered: boolean) => {
+    setPlayer1RandomInitialCards((prevState) => {
+      let tempPlayer1CardsState = { ...prevState };
+      tempPlayer1CardsState.hovered[index] = hovered;
+      return tempPlayer1CardsState;
+    });
+  };
+  const handleEliminateCard = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number
+  ) => {
+    if (player1RandomInitialCards.cards.length <= 3) return false;
+    setPlayer1RandomInitialCards((prevState) => {
+      let tempPlayer1CardsState = [...prevState.cards];
+      let tempPlayerHoverState = [...prevState.hovered];
+      tempPlayer1CardsState.splice(index, 1);
+      tempPlayerHoverState.splice(index, 1);
+      return { cards: tempPlayer1CardsState, hovered: tempPlayerHoverState };
+    });
+    return;
+  };
 
   useEffect(() => {
-    const tempPlayer1Cards: CardType[] = [];
-    const tempPlayer2Cards: CardType[] = [];
+    const tempPlayer1Cards: {
+      cards: CardType[];
+      hovered: boolean[];
+    } = { cards: [], hovered: [] };
+    const tempPlayer2Cards: {
+      cards: CardType[];
+      hovered: boolean[];
+    } = { cards: [], hovered: [] };
+    let tempCards = [...cards];
     for (let i = 0; i < 5; i++) {
       const player1RandomCardIndex = Math.floor(Math.random() * cards.length);
+      tempPlayer1Cards.cards.push(cards[player1RandomCardIndex]);
+      tempPlayer1Cards.hovered.push(false);
+      tempCards.splice(player1RandomCardIndex, 1);
+
       const player2RandomCardIndex = Math.floor(Math.random() * cards.length);
-      tempPlayer1Cards.push(cards[player1RandomCardIndex]);
-      tempPlayer2Cards.push(cards[player2RandomCardIndex]);
+      tempPlayer2Cards.cards.push(cards[player2RandomCardIndex]);
+      tempPlayer2Cards.hovered.push(false);
+      tempCards.splice(player2RandomCardIndex, 1);
     }
-    setPlayer1RandomInitialCards([...tempPlayer1Cards]);
-    setPlayer2RandomInitialCards([...tempPlayer2Cards]);
+    setPlayer1RandomInitialCards({ ...tempPlayer1Cards });
+    setPlayer2RandomInitialCards({ ...tempPlayer2Cards });
   }, []);
 
   return (
     <div className={classes.bg_container}>
       <div className={classes.main_container}>
-        <>
+        <div>
           <p className={classes.player_2_label}>بازیکن شماره ۲</p>
-          {player2RandomInitialCards.map((p2card, index) => (
+          {player2RandomInitialCards.cards.map((p2card, index) => (
             <div
+              key={`${p2card.rank}-${p2card.suit}`}
               className={classes.hakem_detector_card}
               style={{
                 top: `${70 + index * 5}px`,
@@ -62,32 +95,33 @@ const ChooseHokm = ({
               }}
               ref={player2Ref}
             >
-              <Card
-                suit={p2card?.suit}
-                rank={p2card?.rank}
-                back={hakem === players.PLAYER_2}
-              />
+              <Card suit={p2card?.suit} rank={p2card?.rank} back />
             </div>
           ))}
-          {player1RandomInitialCards.map((p1card, index) => (
+          {player1RandomInitialCards.cards.map((p1card, index) => (
             <div
+              key={`${p1card.rank}-${p1card.suit}`}
               className={classes.hakem_detector_card}
               style={{
-                bottom: `${70 - index * 5}px`,
+                bottom: `${
+                  70 -
+                  index * 5 +
+                  (player1RandomInitialCards.hovered[index] ? 50 : 0)
+                }px`,
                 left: `${index * 20}px`,
+                zIndex: player1RandomInitialCards.hovered[index] ? 100 : 1,
                 transform: `rotate(${20 + (index - 4) * 10}deg)`,
               }}
               ref={player1Ref}
+              onMouseEnter={() => handlePlayer1CardHover(index, true)}
+              onMouseLeave={() => handlePlayer1CardHover(index, false)}
+              onClick={(e) => handleEliminateCard(e, index)}
             >
-              <Card
-                suit={p1card?.suit}
-                rank={p1card?.rank}
-                back={hakem === players.PLAYER_1}
-              />
+              <Card suit={p1card?.suit} rank={p1card?.rank} />
             </div>
           ))}
           <p className={classes.player_1_label}>بازیکن شماره۱</p>
-        </>
+        </div>
       </div>
     </div>
   );
