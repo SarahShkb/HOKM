@@ -27,3 +27,10 @@ export const players = {
   PLAYER_3: 3,
   PLAYER_4: 4,
 };
+
+export const GAME_STAGES = {
+  CHOOSE_HAKEM: 0,
+  CHOOSE_HOKM: 1,
+  CHOOSE_CARDS: 2,
+  PLAY: 3,
+};
