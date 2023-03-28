@@ -40,11 +40,17 @@ const Card = ({ suit, rank, back }: CardType): JSX.Element => {
         <>
           <div className={`${classes.rank} ${classes.top}`}>
             {getSpecialCardRanksString(rank)}
+            <div className={classes.rank_icon}>
+              <IconComponent />
+            </div>
           </div>
           <div className={classes.suit}>
             <IconComponent />
           </div>
           <div className={`${classes.rank} ${classes.bottom}`}>
+            <div className={classes.rank_icon}>
+              <IconComponent />
+            </div>
             {getSpecialCardRanksString(rank)}
           </div>
         </>
