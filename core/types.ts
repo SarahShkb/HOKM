@@ -13,4 +13,15 @@ export type ChooseHakemType = {
   pileOfCards: React.MutableRefObject<null>;
   cardsRef: React.MutableRefObject<never[]>;
   player2Ref: React.MutableRefObject<null>;
+  setGameState: (gameState: number) => void;
+};
+
+export type ChooseHokmType = {
+  setHOKM: (h: number) => void;
+  hakem: number;
+  player1Ref: React.MutableRefObject<null>;
+  pileOfCards: React.MutableRefObject<null>;
+  cardsRef: React.MutableRefObject<never[]>;
+  player2Ref: React.MutableRefObject<null>;
+  setGameState: (gameState: number) => void;
 };

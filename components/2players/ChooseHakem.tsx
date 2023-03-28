@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 // icons
 import CrownIcon from "assets/icons/Crown";
 // constants
-import { ranks, players } from "core/constants";
+import { GAME_STAGES, ranks } from "core/constants";
 // modules
 import { getCards } from "core/modules/generalHelperFunctions";
 // components
@@ -22,6 +22,7 @@ const ChooseHakem = ({
   pileOfCards,
   cardsRef,
   player2Ref,
+  setGameState,
 }: ChooseHakemType) => {
   const cards = getCards();
   let hakemCounter = 0;
@@ -65,8 +66,8 @@ const ChooseHakem = ({
         });
 
         if (pulledCard.rank === ranks.ACE) {
-          //setHakem(hakemCounter % 2);
-          //clearInterval(chooseHakemInterval);
+          setHakem(hakemCounter % 2);
+          clearInterval(chooseHakemInterval);
         }
         // if (hakemCounter === 10) {
         //   //setHakem(hakemCounter % 2);
@@ -102,7 +103,10 @@ const ChooseHakem = ({
               }`}</span>{" "}
               است!
             </p>
-            <button className={classes.start_game_button} onClick={() => {}}>
+            <button
+              className={classes.start_game_button}
+              onClick={() => setGameState(GAME_STAGES.CHOOSE_HOKM)}
+            >
               {"شروع بازی"}
             </button>
           </div>

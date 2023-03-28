@@ -1,22 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-// icons
-import CrownIcon from "assets/icons/Crown";
+import React, { useState, useRef } from "react";
 // constants
-import { ranks, players, GAME_STAGES } from "core/constants";
-// modules
-import { getCards } from "core/modules/generalHelperFunctions";
+import { GAME_STAGES, players } from "core/constants";
 // components
-import Card from "components/general/Card";
 import ChooseHakem from "components/2players/ChooseHakem";
-// types
-import { CardType } from "core/types";
-// styles
-//import classes from "styles/components/2players/main.module.scss";
+import ChooseHokm from "components/2players/ChooseHokm";
 
 const Main2Players = () => {
-  const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HAKEM);
+  const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HOKM);
   const [chooseHAKEM, setChooseHAKEM] = useState<boolean>(false);
-  const [hakem, setHakem] = useState<number>(-1);
+  const [hakem, setHakem] = useState<number>(players.PLAYER_1);
+  const [HOKM, setHOKM] = useState<number>(null);
 
   const player1Ref = useRef(null);
   const pileOfCards = useRef(null);
@@ -36,6 +29,19 @@ const Main2Players = () => {
             pileOfCards={pileOfCards}
             cardsRef={cardsRef}
             player2Ref={player2Ref}
+            setGameState={setGameState}
+          />
+        );
+      case GAME_STAGES.CHOOSE_HOKM:
+        return (
+          <ChooseHokm
+            setHOKM={setHOKM}
+            hakem={hakem}
+            player1Ref={player1Ref}
+            pileOfCards={pileOfCards}
+            cardsRef={cardsRef}
+            player2Ref={player2Ref}
+            setGameState={setGameState}
           />
         );
       default:

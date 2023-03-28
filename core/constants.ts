@@ -22,10 +22,10 @@ export const ranks = {
 };
 
 export const players = {
-  PLAYER_1: 1,
-  PLAYER_2: 2,
-  PLAYER_3: 3,
-  PLAYER_4: 4,
+  PLAYER_1: 0,
+  PLAYER_2: 1,
+  PLAYER_3: 2,
+  PLAYER_4: 3,
 };
 
 export const GAME_STAGES = {
