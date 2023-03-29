@@ -6,9 +6,9 @@ import ChooseHakem from "components/ChooseHakem";
 import ChooseHokm from "components/ChooseHokm";
 
 const Main = () => {
-  const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HOKM);
+  const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HAKEM);
   const [chooseHAKEM, setChooseHAKEM] = useState<boolean>(false);
-  const [hakem, setHakem] = useState<number>(players.PLAYER_1);
+  const [hakem, setHakem] = useState<number>(-1);
   const [HOKM, setHOKM] = useState<number>(null);
 
   const player1Ref = useRef(null);

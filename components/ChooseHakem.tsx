@@ -69,10 +69,6 @@ const ChooseHakem = ({
           setHakem(hakemCounter % 2);
           clearInterval(chooseHakemInterval);
         }
-        // if (hakemCounter === 10) {
-        //   //setHakem(hakemCounter % 2);
-        //   clearInterval(chooseHakemInterval);
-        // }
         tempCards.splice(randomCardIndex, 1);
         cardsRef.current.pop();
         hakemCounter++;
