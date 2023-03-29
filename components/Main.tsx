@@ -2,10 +2,10 @@ import React, { useState, useRef } from "react";
 // constants
 import { GAME_STAGES, players } from "core/constants";
 // components
-import ChooseHakem from "components/2players/ChooseHakem";
-import ChooseHokm from "components/2players/ChooseHokm";
+import ChooseHakem from "components/ChooseHakem";
+import ChooseHokm from "components/ChooseHokm";
 
-const Main2Players = () => {
+const Main = () => {
   const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HOKM);
   const [chooseHAKEM, setChooseHAKEM] = useState<boolean>(false);
   const [hakem, setHakem] = useState<number>(players.PLAYER_1);
@@ -50,4 +50,4 @@ const Main2Players = () => {
   return GameComponent();
 };
 
-export default Main2Players;
+export default Main;

@@ -12,7 +12,7 @@ import HokmSuit from "components/general/HokmSuit";
 // types
 import { ChooseHokmType } from "core/types";
 // styles
-import classes from "styles/components/2players/chooseHokm.module.scss";
+import classes from "styles/components/chooseHokm.module.scss";
 import { CardType } from "core/types";
 
 const ChooseHokm = ({

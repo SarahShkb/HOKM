@@ -10,7 +10,7 @@ import Card from "components/general/Card";
 // types
 import { ChooseHakemType } from "core/types";
 // styles
-import classes from "styles/components/2players/chooseHakem.module.scss";
+import classes from "styles/components/chooseHakem.module.scss";
 import { CardType } from "core/types";
 
 const ChooseHakem = ({

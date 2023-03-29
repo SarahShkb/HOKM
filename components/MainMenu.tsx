@@ -8,11 +8,8 @@ const MainMenu = (): JSX.Element => (
   <div className={classes.main_container}>
     <h1>حکم</h1>
     <div className={classes.links_wrapper}>
-      <Link href={`/2players`}>
-        <button>دو نفره</button>
-      </Link>
-      <Link href={`/4players`}>
-        <button>چهار نفره</button>
+      <Link href={`/main`}>
+        <button>شروع</button>
       </Link>
     </div>
   </div>
