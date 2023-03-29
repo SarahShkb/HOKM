@@ -6,6 +6,7 @@ const DiamondsIcon = (): JSX.Element => (
     height="1654.000000pt"
     viewBox="0 0 1200.000000 1654.000000"
     preserveAspectRatio="xMidYMid meet"
+    fill="red"
   >
     <g
       transform="translate(0.000000,1654.000000) scale(0.100000,-0.100000)"

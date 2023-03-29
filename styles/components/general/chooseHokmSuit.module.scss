@@ -1,0 +1,34 @@
+.main {
+  p {
+    text-align: center;
+  }
+  .suits {
+    display: flex;
+    .suit_wrapper {
+      width: 5rem;
+      height: 4rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      margin: 0 0.25rem;
+      background-color: rgba(47, 45, 45, 0.576);
+      cursor: pointer;
+      svg {
+        width: 3rem !important;
+      }
+      &.red {
+        svg {
+          fill: red;
+        }
+      }
+      &:hover {
+        background-color: rgba(87, 82, 82, 0.576);
+        svg {
+          width: 3.5rem !important;
+          height: 3.5rem;
+        }
+      }
+    }
+  }
+}

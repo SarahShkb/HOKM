@@ -7,6 +7,8 @@ import { ranks, players } from "core/constants";
 import { getCards } from "core/modules/generalHelperFunctions";
 // components
 import Card from "components/general/Card";
+import ChooseHokmSuit from "components/general/ChooseHokmSuit";
+import HokmSuit from "components/general/HokmSuit";
 // types
 import { ChooseHokmType } from "core/types";
 // styles
@@ -14,11 +16,10 @@ import classes from "styles/components/2players/chooseHokm.module.scss";
 import { CardType } from "core/types";
 
 const ChooseHokm = ({
+  HOKM,
   setHOKM,
   hakem,
   player1Ref,
-  pileOfCards,
-  cardsRef,
   player2Ref,
 }: ChooseHokmType) => {
   const cards = getCards();
@@ -82,7 +83,9 @@ const ChooseHokm = ({
   return (
     <div className={classes.bg_container}>
       <div className={classes.main_container}>
-        <div>
+        <div className={classes.hokm_suit}></div>
+        <>
+          {HOKM !== null && <HokmSuit hokm={HOKM} />}
           <p className={classes.player_2_label}>بازیکن شماره ۲</p>
           {player2RandomInitialCards.cards.map((p2card, index) => (
             <div
@@ -98,6 +101,23 @@ const ChooseHokm = ({
               <Card suit={p2card?.suit} rank={p2card?.rank} back />
             </div>
           ))}
+          {!HOKM && (
+            <div className={classes.hakem_announcement}>
+              <ChooseHokmSuit handleChooseHokm={setHOKM} />
+            </div>
+          )}
+          {(HOKM !== null || hakem !== players.PLAYER_1) &&
+            player1RandomInitialCards.cards.length - 3 > 0 && (
+              <div className={classes.hakem_announcement}>
+                <p>
+                  با کلیک بر روی کارت‌ها{" "}
+                  <span className={classes.hakem_player_number}>{`${
+                    player1RandomInitialCards.cards.length - 3
+                  }`}</span>{" "}
+                  کارت را بیرون بیندازید!
+                </p>
+              </div>
+            )}
           {player1RandomInitialCards.cards.map((p1card, index) => (
             <div
               key={`${p1card.rank}-${p1card.suit}`}
@@ -108,8 +128,10 @@ const ChooseHokm = ({
                   index * 5 +
                   (player1RandomInitialCards.hovered[index] ? 50 : 0)
                 }px`,
+                cursor: player1RandomInitialCards.hovered[index]
+                  ? "pointer"
+                  : "initial",
                 left: `${index * 20}px`,
-                zIndex: player1RandomInitialCards.hovered[index] ? 100 : 1,
                 transform: `rotate(${20 + (index - 4) * 10}deg)`,
               }}
               ref={player1Ref}
@@ -121,7 +143,7 @@ const ChooseHokm = ({
             </div>
           ))}
           <p className={classes.player_1_label}>بازیکن شماره۱</p>
-        </div>
+        </>
       </div>
     </div>
   );

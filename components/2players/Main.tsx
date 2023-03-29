@@ -35,11 +35,10 @@ const Main2Players = () => {
       case GAME_STAGES.CHOOSE_HOKM:
         return (
           <ChooseHokm
+            HOKM={HOKM}
             setHOKM={setHOKM}
             hakem={hakem}
             player1Ref={player1Ref}
-            pileOfCards={pileOfCards}
-            cardsRef={cardsRef}
             player2Ref={player2Ref}
             setGameState={setGameState}
           />
