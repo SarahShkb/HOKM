@@ -13,6 +13,8 @@ export type ChooseHakemType = {
   pileOfCards: React.MutableRefObject<null>;
   cardsRef: React.MutableRefObject<never[]>;
   player2Ref: React.MutableRefObject<null>;
+  player3Ref: React.MutableRefObject<null>;
+  player4Ref: React.MutableRefObject<null>;
   setGameState: (gameState: number) => void;
 };
 

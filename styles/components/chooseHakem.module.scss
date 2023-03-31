@@ -25,6 +25,18 @@
       text-align: center;
     }
 
+    .player_3_label {
+      position: absolute;
+      top: 30%;
+      right: 4rem;
+    }
+
+    .player_4_label {
+      position: absolute;
+      top: 30%;
+      left: 4rem;
+    }
+
     .choose_HAKEM_button,
     .start_game_button {
       margin: auto;
@@ -79,12 +91,19 @@
       position: absolute;
       margin-right: auto;
       margin-left: auto;
-      width: calc(100% - 6rem);
+      width: fit-content;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 1000000;
+      left: 45%;
+
+      &.rivals {
+        top: 40%;
+        width: fit-content;
+        left: initial;
+      }
     }
     .pile_of_cards {
       width: 100%;
@@ -92,7 +111,7 @@
       align-items: center;
       display: flex;
       justify-content: center;
-      //z-index: -1;
+
       .in_pile_card {
         position: absolute;
         transform-style: preserve-3d;

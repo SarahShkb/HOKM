@@ -12,9 +12,11 @@ const Main = () => {
   const [HOKM, setHOKM] = useState<number>(null);
 
   const player1Ref = useRef(null);
+  const player2Ref = useRef(null);
+  const player3Ref = useRef(null);
+  const player4Ref = useRef(null);
   const pileOfCards = useRef(null);
   const cardsRef = useRef([]);
-  const player2Ref = useRef(null);
 
   const GameComponent = (): JSX.Element => {
     switch (gameState) {
@@ -25,10 +27,12 @@ const Main = () => {
             setChooseHAKEM={setChooseHAKEM}
             hakem={hakem}
             setHakem={setHakem}
-            player1Ref={player1Ref}
             pileOfCards={pileOfCards}
             cardsRef={cardsRef}
+            player1Ref={player1Ref}
             player2Ref={player2Ref}
+            player3Ref={player3Ref}
+            player4Ref={player4Ref}
             setGameState={setGameState}
           />
         );
