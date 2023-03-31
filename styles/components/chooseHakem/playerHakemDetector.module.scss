@@ -1,0 +1,32 @@
+.hakem_detector_card {
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000000;
+  left: 45%;
+
+  &.rival {
+    top: 40%;
+    width: fit-content;
+    left: initial;
+  }
+}
+
+.label {
+  position: absolute;
+  &.label3 {
+    width: calc(100% - 6rem);
+    height: fit-content;
+    top: 0px;
+    text-align: center;
+  }
+  &.rival_label {
+    margin: 0;
+    top: 34%;
+  }
+}

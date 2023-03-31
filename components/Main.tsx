@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 // constants
 import { GAME_STAGES, players } from "core/constants";
 // components
-import ChooseHakem from "components/ChooseHakem";
+import ChooseHakem from "components/chooseHakem/ChooseHakem";
 import ChooseHokm from "components/ChooseHokm";
 
 const Main = () => {

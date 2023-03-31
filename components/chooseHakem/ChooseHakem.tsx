@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-// icons
-import CrownIcon from "assets/icons/Crown";
 // constants
-import { GAME_STAGES, ranks } from "core/constants";
+import { GAME_STAGES, players, ranks } from "core/constants";
 // modules
 import { getCards } from "core/modules/generalHelperFunctions";
 // components
 import Card from "components/general/Card";
+import StartPollButton from "components/chooseHakem/StartPollButton";
+import HakemAnnouncement from "components/chooseHakem/HakemAnnouncement";
+import HakemPlayerDetector from "components/chooseHakem/PlayerHakemDetector";
 // types
 import { ChooseHakemType } from "core/types";
 // styles
-import classes from "styles/components/chooseHakem.module.scss";
+import classes from "styles/components/chooseHakem/chooseHakem.module.scss";
 import { CardType } from "core/types";
 
 const ChooseHakem = ({
@@ -64,22 +65,25 @@ const ChooseHakem = ({
           let playerRef = null;
           // detect players turn for recieving card
           switch (hakemCounter % 4) {
-            case 0:
+            case players.PLAYER_1:
               playerRef = player1Ref;
               break;
-            case 1:
+            case players.PLAYER_2:
               playerRef = player2Ref;
               break;
-            case 2:
+            case players.PLAYER_3:
               playerRef = player3Ref;
               break;
-            case 3:
+            case players.PLAYER_4:
               playerRef = player4Ref;
               break;
           }
-          console.log(playerRef?.current?.offsetLeft);
           tempCoordsArr[hakemCounter] = {
-            top: playerRef?.current?.offsetTop,
+            top:
+              playerRef?.current?.offsetTop -
+              (window.innerHeight - playerRef?.current?.offsetTop < 100
+                ? 160
+                : 0),
             left:
               playerRef?.current?.offsetLeft -
               (window.innerWidth - playerRef?.current?.offsetLeft < 50
@@ -96,7 +100,7 @@ const ChooseHakem = ({
         });
 
         if (pulledCard.rank === ranks.ACE) {
-          setHakem(hakemCounter % 4);
+          setHakem((hakemCounter + 1) % 4);
           clearInterval(chooseHakemInterval);
         }
         tempCards.splice(randomCardIndex, 1);
@@ -109,65 +113,28 @@ const ChooseHakem = ({
     <div className={classes.bg_container}>
       <div className={classes.main_container}>
         {!chooseHAKEM && hakem < 0 && (
-          <button
-            className={classes.choose_HAKEM_button}
-            onClick={() => setChooseHAKEM(true)}
-          >
-            {"بریم برای انتخاب حاکم"}
-            <div className={classes.crown_icon_wrapper}>
-              <CrownIcon />
-            </div>
-          </button>
+          <StartPollButton handleClick={() => setChooseHAKEM(true)} />
         )}
         {hakem >= 0 && (
-          <div className={classes.hakem_announcement}>
-            <p>
-              <CrownIcon />
-              حاکم، بازیکن شماره{" "}
-              <span className={classes.hakem_player_number}>{`${
-                hakem + 1
-              }`}</span>{" "}
-              است!
-            </p>
-            <button
-              className={classes.start_game_button}
-              onClick={() => setGameState(GAME_STAGES.CHOOSE_HOKM)}
-            >
-              {"شروع بازی"}
-            </button>
-          </div>
+          <HakemAnnouncement
+            hakem={hakem}
+            handleClick={() => setGameState(GAME_STAGES.CHOOSE_HOKM)}
+          />
         )}
         {chooseHAKEM && (
           <>
-            <p className={classes.player_2_label}>بازیکن شماره ۲</p>
-            <div
-              className={classes.hakem_detector_card}
+            <HakemPlayerDetector
+              playerRef={player3Ref}
+              player={players.PLAYER_3}
+              cardState={currentHakemCardsState[2]}
               style={{ top: "70px" }}
-              ref={player2Ref}
-            >
-              {currentHakemCardsState[0] && (
-                <>
-                  <Card
-                    suit={currentHakemCardsState[0]?.suit}
-                    rank={currentHakemCardsState[0]?.rank}
-                  />
-                </>
-              )}
-            </div>
-            <p className={classes.player_3_label}>بازیکن شماره ۳</p>
-            <div
-              className={`${classes.hakem_detector_card} ${classes.rivals}`}
-              ref={player3Ref}
-            >
-              {currentHakemCardsState[2] && (
-                <>
-                  <Card
-                    suit={currentHakemCardsState[2]?.suit}
-                    rank={currentHakemCardsState[2]?.rank}
-                  />
-                </>
-              )}
-            </div>
+              labelStyle={{ top: "10px" }}
+            />
+            <HakemPlayerDetector
+              playerRef={player2Ref}
+              player={players.PLAYER_2}
+              cardState={currentHakemCardsState[1]}
+            />
             {hakem < 0 && (
               <div className={classes.pile_of_cards} ref={pileOfCards}>
                 {cards.map((card, index) => (
@@ -191,36 +158,24 @@ const ChooseHakem = ({
                 ))}
               </div>
             )}
-            <p className={classes.player_4_label}>بازیکن شماره ۴</p>
-            <div
-              className={`${classes.hakem_detector_card} ${classes.rivals}`}
+            <HakemPlayerDetector
+              playerRef={player4Ref}
+              player={players.PLAYER_4}
+              cardState={currentHakemCardsState[3]}
               style={{ left: "3rem" }}
-              ref={player4Ref}
-            >
-              {currentHakemCardsState[3] && (
-                <>
-                  <Card
-                    suit={currentHakemCardsState[3]?.suit}
-                    rank={currentHakemCardsState[3]?.rank}
-                  />
-                </>
-              )}
-            </div>
-            <div
-              className={classes.hakem_detector_card}
-              style={{ bottom: "10px" }}
-              ref={player1Ref}
-            >
-              {currentHakemCardsState[1] && (
-                <>
-                  <Card
-                    suit={currentHakemCardsState[1]?.suit}
-                    rank={currentHakemCardsState[1]?.rank}
-                  />
-                </>
-              )}
-              <p>بازیکن شماره۱</p>
-            </div>
+              labelStyle={{ left: "3rem" }}
+            />
+            <HakemPlayerDetector
+              playerRef={player1Ref}
+              player={players.PLAYER_1}
+              cardState={currentHakemCardsState[0]}
+              style={{ bottom: "70px" }}
+              labelStyle={{
+                bottom: "10px",
+                width: "calc(100% - 6rem)",
+                textAlign: "center",
+              }}
+            />
           </>
         )}
       </div>

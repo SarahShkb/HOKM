@@ -1,0 +1,52 @@
+@import "styles/variables.scss";
+
+.choose_HAKEM_button {
+  margin: auto;
+  background-color: transparent;
+  border: 0.125rem solid white;
+  border-radius: 1rem;
+  color: white;
+  font-family: unset;
+  padding: 0.5rem 4rem;
+  font-weight: bold;
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    border-color: gold;
+    color: gold;
+    cursor: pointer;
+    .crown_icon_wrapper {
+      svg {
+        g {
+          fill: gold;
+        }
+      }
+    }
+  }
+  .crown_icon_wrapper {
+    margin: 1rem;
+    margin-bottom: 0;
+    svg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .choose_HAKEM_button {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+    display: flex;
+    .crown_icon_wrapper {
+      margin: 1rem;
+      margin-bottom: 0;
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+}
