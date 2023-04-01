@@ -6,7 +6,6 @@ import ChooseHokmSuit from "components/chooseHokm/ChooseHokmSuit";
 import HokmSuit from "components/general/HokmSuit";
 import PlayerCards from "components/chooseHokm/PlayerCards";
 import UserCards from "components/chooseHokm/UserCards";
-import CardEliminationHint from "components/chooseHokm/CardEliminationHint";
 // types
 import { ChooseHokmType } from "core/types";
 // styles
@@ -46,12 +45,6 @@ const ChooseHokm = ({ HOKM, setHOKM, hakem }: ChooseHokmType) => {
             getLeft={(index) => `calc(-38% + ${index * 20}px)`}
             labelStyle={{ left: "3rem" }}
           />
-          {(HOKM !== null || hakem !== players.PLAYER_1) &&
-            player1RandomInitialCards.cards.length - 3 > 0 && (
-              <CardEliminationHint
-                remainingCards={player1RandomInitialCards.cards.length - 3}
-              />
-            )}
           <UserCards
             randomInitialCards={player1RandomInitialCards}
             setRandomInitialCards={setPlayer1RandomInitialCards}
