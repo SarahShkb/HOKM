@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import { GAME_STAGES, players } from "core/constants";
 // components
 import ChooseHakem from "components/chooseHakem/ChooseHakem";
-import ChooseHokm from "components/ChooseHokm";
+import ChooseHokm from "components/chooseHokm/ChooseHokm";
 
 const Main = () => {
   const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HAKEM);

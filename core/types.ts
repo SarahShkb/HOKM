@@ -22,7 +22,5 @@ export type ChooseHokmType = {
   HOKM: number;
   setHOKM: (h: number) => void;
   hakem: number;
-  player1Ref: React.MutableRefObject<null>;
-  player2Ref: React.MutableRefObject<null>;
   setGameState: (gameState: number) => void;
 };

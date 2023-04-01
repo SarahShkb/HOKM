@@ -7,7 +7,7 @@ import HeartsIcon from "assets/icons/Hearts";
 import ClubsIcon from "assets/icons/Clubs";
 import DiamondsIcon from "assets/icons/Diamonds";
 // styles
-import classes from "styles/components/general/chooseHokmSuit.module.scss";
+import classes from "styles/components/chooseHokm/chooseHokmSuit.module.scss";
 
 const ChooseHokmSuit = ({
   handleChooseHokm,
