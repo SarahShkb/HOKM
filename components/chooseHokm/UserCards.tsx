@@ -1,35 +1,37 @@
 import React, { useEffect, useState } from "react";
 // components
 import Card from "components/general/Card";
+// icons
+import CrownIcon from "assets/icons/Crown";
 // styles
 import classes from "styles/components/chooseHokm/playerCards.module.scss";
 // types
 import { CardType } from "core/types";
 // constants
 import { players } from "core/constants";
-// modules
-import { getCards } from "core/modules/generalHelperFunctions";
 
 const UserCards = ({
   randomInitialCards,
   setRandomInitialCards,
+  isHakem,
 }: {
   randomInitialCards: {
     cards: CardType[];
     hovered: boolean[];
   };
-  setRandomInitialCards: (rc: {
-    cards: CardType[];
-    hovered: boolean[];
-  }) => void;
+  setRandomInitialCards: (
+    rc: {
+      cards: CardType[];
+      hovered: boolean[];
+    }[]
+  ) => void;
+  isHakem?: boolean;
 }) => {
-  const cards = getCards();
-
   // handlers
   const handlePlayer1CardHover = (index: number, hovered: boolean) => {
     setRandomInitialCards((prevState) => {
-      let tempPlayer1CardsState = { ...prevState };
-      tempPlayer1CardsState.hovered[index] = hovered;
+      let tempPlayer1CardsState = [...prevState];
+      tempPlayer1CardsState[0].hovered[index] = hovered;
       return tempPlayer1CardsState;
     });
   };
@@ -39,28 +41,19 @@ const UserCards = ({
   ) => {
     if (randomInitialCards.cards.length <= 3) return false;
     setRandomInitialCards((prevState) => {
-      let tempPlayer1CardsState = [...prevState.cards];
-      let tempPlayerHoverState = [...prevState.hovered];
+      const tempPlayer1State = [...prevState];
+      let tempPlayer1CardsState = [...prevState[0].cards];
+      let tempPlayerHoverState = [...prevState[0].hovered];
       tempPlayer1CardsState.splice(index, 1);
       tempPlayerHoverState.splice(index, 1);
-      return { cards: tempPlayer1CardsState, hovered: tempPlayerHoverState };
+      tempPlayer1State[0] = {
+        cards: tempPlayer1CardsState,
+        hovered: tempPlayerHoverState,
+      };
+      return tempPlayer1State;
     });
     return;
   };
-  useEffect(() => {
-    const tempPlayerCards: {
-      cards: CardType[];
-      hovered: boolean[];
-    } = { cards: [], hovered: [] };
-    let tempCards = [...cards];
-    for (let i = 0; i < 5; i++) {
-      const playerRandomCardIndex = Math.floor(Math.random() * cards.length);
-      tempPlayerCards.cards.push(cards[playerRandomCardIndex]);
-      tempPlayerCards.hovered.push(false);
-      tempCards.splice(playerRandomCardIndex, 1);
-    }
-    setRandomInitialCards({ ...tempPlayerCards });
-  }, []);
   return (
     <>
       <div className={classes.cards_wrapper}>
@@ -84,7 +77,9 @@ const UserCards = ({
           </div>
         ))}
       </div>
-      <p className={`${classes.label} ${classes.label1}`}>بازیکن شماره۱</p>
+      <p className={`${classes.label} ${classes.label1}`}>
+        بازیکن شماره۱ {isHakem && <CrownIcon />}
+      </p>
     </>
   );
 };

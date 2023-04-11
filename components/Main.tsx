@@ -4,12 +4,15 @@ import { GAME_STAGES, players } from "core/constants";
 // components
 import ChooseHakem from "components/chooseHakem/ChooseHakem";
 import ChooseHokm from "components/chooseHokm/ChooseHokm";
+// types
+import { CardType } from "core/types";
 
 const Main = () => {
   const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HAKEM);
   const [chooseHAKEM, setChooseHAKEM] = useState<boolean>(false);
   const [hakem, setHakem] = useState<number>(-1);
   const [HOKM, setHOKM] = useState<number>(null);
+  const [remainingCards, setRemainingCards] = useState<CardType[]>(null);
 
   const player1Ref = useRef(null);
   const player2Ref = useRef(null);
@@ -42,9 +45,8 @@ const Main = () => {
             HOKM={HOKM}
             setHOKM={setHOKM}
             hakem={hakem}
-            player1Ref={player1Ref}
-            player2Ref={player2Ref}
             setGameState={setGameState}
+            setRemainingCards={setRemainingCards}
           />
         );
       default:

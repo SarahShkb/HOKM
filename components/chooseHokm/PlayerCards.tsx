@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 // components
 import Card from "components/general/Card";
+// icons
+import CrownIcon from "assets/icons/Crown";
 // styles
 import classes from "styles/components/chooseHokm/playerCards.module.scss";
 // types
@@ -16,12 +18,14 @@ const PlayerCards = ({
   getLeft,
   getRight,
   labelStyle,
+  isHakem,
 }: {
   player: number;
   getTop: (i: number) => string;
   getLeft?: (i: number) => string;
   getRight?: (i: number) => string;
   labelStyle?: React.CSSProperties;
+  isHakem?: boolean;
 }) => {
   const cards = getCards();
   const [playerRandomInitialCards, setPlayerRandomInitialCards] = useState<{
@@ -50,7 +54,7 @@ const PlayerCards = ({
       ${player === players.PLAYER_3 && classes.label3}`}
         style={labelStyle}
       >
-        بازیکن شماره {player + 1}
+        بازیکن شماره {player + 1} {isHakem && <CrownIcon />}
       </p>
       <div className={classes.cards_wrapper}>
         {playerRandomInitialCards.cards.map((pCard, index) => (

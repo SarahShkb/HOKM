@@ -23,4 +23,5 @@ export type ChooseHokmType = {
   setHOKM: (h: number) => void;
   hakem: number;
   setGameState: (gameState: number) => void;
+  setRemainingCards: (cards: CardType[]) => void;
 };
