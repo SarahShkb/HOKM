@@ -34,7 +34,8 @@
     }
 
     .choose_HAKEM_button,
-    .start_game_button {
+    .start_game_button,
+    .play_button {
       margin: auto;
       background-color: transparent;
       border: 0.125rem solid white;
@@ -67,6 +68,9 @@
           height: 2.5rem;
         }
       }
+    }
+    .play_button_wrapper {
+      margin: auto;
     }
   }
 }

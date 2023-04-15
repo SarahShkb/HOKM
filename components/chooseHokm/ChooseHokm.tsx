@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 // constants
-import { players, ranks } from "core/constants";
+import { GAME_STAGES, players, ranks } from "core/constants";
 // components
 import ChooseHokmSuit from "components/chooseHokm/ChooseHokmSuit";
 import HokmSuit from "components/general/HokmSuit";
@@ -19,6 +19,7 @@ const ChooseHokm = ({
   setHOKM,
   hakem,
   setRemainingCards,
+  setGameState,
 }: ChooseHokmType) => {
   const [randomInitialCards, setRandomInitialCards] = useState<
     {
@@ -108,8 +109,18 @@ const ChooseHokm = ({
             isHakem={hakem === players.PLAYER_3}
           />
           {!HOKM && hakem === players.PLAYER_1 && (
-            <div className={classes.hakem_announcement}>
+            <div>
               <ChooseHokmSuit handleChooseHokm={setHOKM} />
+            </div>
+          )}
+          {HOKM && (
+            <div className={classes.play_button_wrapper}>
+              <button
+                className={classes.play_button}
+                onClick={() => setGameState(GAME_STAGES.PLAY)}
+              >
+                {"شروع بازی"}
+              </button>
             </div>
           )}
           <PlayerCards
