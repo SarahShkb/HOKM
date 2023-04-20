@@ -20,14 +20,9 @@ const ChooseHokm = ({
   hakem,
   setRemainingCards,
   setGameState,
+  playerCardsState,
+  setPlayersCardsState,
 }: ChooseHokmType) => {
-  const [randomInitialCards, setRandomInitialCards] = useState<
-    {
-      cards: CardType[];
-      hovered: boolean[];
-    }[]
-  >(null);
-
   const cards = getCards();
   // handlers
   const handleChooseHokmBySystem = (cards: CardType[]): number => {
@@ -76,74 +71,83 @@ const ChooseHokm = ({
     let tempCards = [...cards];
     for (let p = 0; p < 4; p++) {
       for (let i = 0; i < 5; i++) {
-        const playerRandomCardIndex = Math.floor(Math.random() * cards.length);
-        tempPlayerCards[p].cards.push(cards[playerRandomCardIndex]);
+        const playerRandomCardIndex = Math.floor(
+          Math.random() * tempCards.length
+        );
+        tempPlayerCards[p].cards.push(tempCards[playerRandomCardIndex]);
         tempPlayerCards[p].hovered.push(false);
         tempCards.splice(playerRandomCardIndex, 1);
       }
     }
-    setRandomInitialCards([...tempPlayerCards]);
+    console.log(tempCards);
+    setPlayersCardsState([...tempPlayerCards]);
     setRemainingCards([...tempCards]);
   }, []);
+  console.log(playerCardsState);
 
   useEffect(() => {
     // if system has to choose hokm
-    if (randomInitialCards && hakem !== players.PLAYER_1) {
+    if (playerCardsState && hakem !== players.PLAYER_1) {
       const systemHokm = handleChooseHokmBySystem(
-        randomInitialCards[hakem].cards
+        playerCardsState[hakem].cards
       );
       setHOKM(systemHokm);
     }
-  }, [randomInitialCards]);
+  }, [playerCardsState]);
 
   return (
     <div className={classes.bg_container}>
       <div className={classes.main_container}>
         <div className={classes.hokm_suit}></div>
-        <>
-          {HOKM !== null && <HokmSuit hokm={HOKM} />}
-          <PlayerCards
-            player={players.PLAYER_3}
-            getTop={(index) => `${70 + index * 5}px`}
-            getLeft={(index) => `${index * 20}px`}
-            isHakem={hakem === players.PLAYER_3}
-          />
-          {!HOKM && hakem === players.PLAYER_1 && (
-            <div>
-              <ChooseHokmSuit handleChooseHokm={setHOKM} />
-            </div>
-          )}
-          {HOKM && (
-            <div className={classes.play_button_wrapper}>
-              <button
-                className={classes.play_button}
-                onClick={() => setGameState(GAME_STAGES.PLAY)}
-              >
-                {"شروع بازی"}
-              </button>
-            </div>
-          )}
-          <PlayerCards
-            player={players.PLAYER_2}
-            getTop={(index) => `calc(40% + ${index} * 5px)`}
-            getLeft={(index) => `calc(38% + ${index * 20}px)`}
-            isHakem={hakem === players.PLAYER_2}
-          />
-          <PlayerCards
-            player={players.PLAYER_4}
-            getTop={(index) => `calc(40% + ${index} * 5px)`}
-            getLeft={(index) => `calc(-38% + ${index * 20}px)`}
-            labelStyle={{ left: "3rem" }}
-            isHakem={hakem === players.PLAYER_4}
-          />
-          {randomInitialCards && (
+
+        {playerCardsState && (
+          <>
+            {HOKM !== null && <HokmSuit hokm={HOKM} />}
+            <PlayerCards
+              player={players.PLAYER_3}
+              getTop={(index) => `${70 + index * 5}px`}
+              getLeft={(index) => `${index * 20}px`}
+              isHakem={hakem === players.PLAYER_3}
+              cards={playerCardsState[players.PLAYER_3].cards}
+            />
+            {!HOKM && hakem === players.PLAYER_1 && (
+              <div>
+                <ChooseHokmSuit handleChooseHokm={setHOKM} />
+              </div>
+            )}
+            {HOKM && (
+              <div className={classes.play_button_wrapper}>
+                <button
+                  className={classes.play_button}
+                  onClick={() => setGameState(GAME_STAGES.PLAY)}
+                >
+                  {"شروع بازی"}
+                </button>
+              </div>
+            )}
+            <PlayerCards
+              player={players.PLAYER_2}
+              getTop={(index) => `calc(40% + ${index} * 5px)`}
+              getLeft={(index) => `calc(38% + ${index * 20}px)`}
+              isHakem={hakem === players.PLAYER_2}
+              cards={playerCardsState[players.PLAYER_2].cards}
+            />
+            <PlayerCards
+              player={players.PLAYER_4}
+              getTop={(index) => `calc(40% + ${index} * 5px)`}
+              getLeft={(index) => `calc(-38% + ${index * 20}px)`}
+              labelStyle={{ left: "3rem" }}
+              isHakem={hakem === players.PLAYER_4}
+              cards={playerCardsState[players.PLAYER_4].cards}
+            />
+
             <UserCards
-              randomInitialCards={randomInitialCards[0]}
-              setRandomInitialCards={setRandomInitialCards}
+              randomInitialCards={playerCardsState[players.PLAYER_1]}
+              setRandomInitialCards={setPlayersCardsState}
               isHakem={hakem === players.PLAYER_1}
             />
-          )}
-        </>
+          </>
+        )}
       </div>
     </div>
   );

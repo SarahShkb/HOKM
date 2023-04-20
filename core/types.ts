@@ -18,10 +18,26 @@ export type ChooseHakemType = {
   setGameState: (gameState: number) => void;
 };
 
+export type PlayerCardsStateType = {
+  cards: CardType[];
+  hovered: boolean[];
+};
+
 export type ChooseHokmType = {
   HOKM: number;
   setHOKM: (h: number) => void;
   hakem: number;
   setGameState: (gameState: number) => void;
   setRemainingCards: (cards: CardType[]) => void;
+  playerCardsState: PlayerCardsStateType[];
+  setPlayersCardsState: (pcs: PlayerCardsStateType[]) => void;
+};
+
+export type PlayHokmType = {
+  HOKM: number;
+  hakem: number;
+  setGameState: (gameState: number) => void;
+  remainingCards: CardType[];
+  playerCardsState: PlayerCardsStateType[];
+  setPlayersCardsState: (pcs: PlayerCardsStateType[]) => void;
 };

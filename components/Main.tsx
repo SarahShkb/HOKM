@@ -4,8 +4,9 @@ import { GAME_STAGES, players } from "core/constants";
 // components
 import ChooseHakem from "components/chooseHakem/ChooseHakem";
 import ChooseHokm from "components/chooseHokm/ChooseHokm";
+import Play from "components/play/Play";
 // types
-import { CardType } from "core/types";
+import { CardType, PlayerCardsStateType } from "core/types";
 
 const Main = () => {
   const [gameState, setGameState] = useState<number>(GAME_STAGES.CHOOSE_HAKEM);
@@ -13,6 +14,7 @@ const Main = () => {
   const [hakem, setHakem] = useState<number>(-1);
   const [HOKM, setHOKM] = useState<number>(null);
   const [remainingCards, setRemainingCards] = useState<CardType[]>(null);
+  const [playerCards, setPlayerCards] = useState<PlayerCardsStateType[]>(null);
 
   const player1Ref = useRef(null);
   const player2Ref = useRef(null);
@@ -20,6 +22,8 @@ const Main = () => {
   const player4Ref = useRef(null);
   const pileOfCards = useRef(null);
   const cardsRef = useRef([]);
+
+  console.log("ccc", playerCards);
 
   const GameComponent = (): JSX.Element => {
     switch (gameState) {
@@ -47,6 +51,19 @@ const Main = () => {
             hakem={hakem}
             setGameState={setGameState}
             setRemainingCards={setRemainingCards}
+            playerCardsState={playerCards}
+            setPlayersCardsState={setPlayerCards}
+          />
+        );
+      case GAME_STAGES.PLAY:
+        return (
+          <Play
+            HOKM={HOKM}
+            hakem={hakem}
+            setGameState={setGameState}
+            remainingCards={remainingCards}
+            playerCardsState={playerCards}
+            setPlayersCardsState={setPlayerCards}
           />
         );
       default:

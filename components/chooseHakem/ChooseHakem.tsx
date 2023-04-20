@@ -106,7 +106,7 @@ const ChooseHakem = ({
         tempCards.splice(randomCardIndex, 1);
         cardsRef.current.splice(randomCardIndex, 1);
         hakemCounter++;
-      }, 1000);
+      }, 300);
     }
   }, [chooseHAKEM]);
   return (

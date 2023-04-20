@@ -19,7 +19,6 @@ const PlayerCards = ({
   getRight,
   labelStyle,
   isHakem,
-  cards,
 }: {
   player: number;
   getTop: (i: number) => string;
@@ -27,8 +26,12 @@ const PlayerCards = ({
   getRight?: (i: number) => string;
   labelStyle?: React.CSSProperties;
   isHakem?: boolean;
-  cards: CardType[];
 }) => {
+  const cards = getCards();
+  const [playerRandomInitialCards, setPlayerRandomInitialCards] = useState<{
+    cards: CardType[];
+    hovered: boolean[];
+  }>({ cards: [], hovered: [] });
   return (
     <>
       <p
@@ -40,7 +43,7 @@ const PlayerCards = ({
         بازیکن شماره {player + 1} {isHakem && <CrownIcon />}
       </p>
       <div className={classes.cards_wrapper}>
-        {cards.map((pCard, index) => (
+        {playerRandomInitialCards.cards.map((pCard, index) => (
           <div
             key={`${pCard.rank}-${pCard.suit}`}
             className={classes.card}
