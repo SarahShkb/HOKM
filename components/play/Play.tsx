@@ -51,18 +51,21 @@ const Play = ({
           <>
             {HOKM !== null && <HokmSuit hokm={HOKM} />}
             <PlayerCards
+              playerRandomInitialCards={playerCardsState[3]?.cards}
               player={players.PLAYER_3}
               getTop={(index) => `${70 + index * 5}px`}
               getLeft={(index) => `${index * 20}px`}
               isHakem={hakem === players.PLAYER_3}
             />
             <PlayerCards
+              playerRandomInitialCards={playerCardsState[2]?.cards}
               player={players.PLAYER_2}
               getTop={(index) => `calc(40% + ${index} * 5px)`}
               getLeft={(index) => `calc(38% + ${index * 20}px)`}
               isHakem={hakem === players.PLAYER_2}
             />
             <PlayerCards
+              playerRandomInitialCards={playerCardsState[4]?.cards}
               player={players.PLAYER_4}
               getTop={(index) => `calc(40% + ${index} * 5px)`}
               getLeft={(index) => `calc(-38% + ${index * 20}px)`}
