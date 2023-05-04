@@ -36,6 +36,7 @@ export type ChooseHokmType = {
 export type PlayHokmType = {
   HOKM: number;
   hakem: number;
+  gameState: number;
   setGameState: (gameState: number) => void;
   remainingCards: CardType[];
   playerCardsState: PlayerCardsStateType[];

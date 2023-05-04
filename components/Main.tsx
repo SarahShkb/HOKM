@@ -59,6 +59,7 @@ const Main = () => {
           <Play
             HOKM={HOKM}
             hakem={hakem}
+            gameState={gameState}
             setGameState={setGameState}
             remainingCards={remainingCards}
             playerCardsState={playerCards}

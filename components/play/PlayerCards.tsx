@@ -15,6 +15,7 @@ import { getCards } from "core/modules/generalHelperFunctions";
 const PlayerCards = ({
   playerRandomInitialCards,
   player,
+  playerRef,
   getTop,
   getLeft,
   getRight,
@@ -23,6 +24,7 @@ const PlayerCards = ({
 }: {
   playerRandomInitialCards: CardType[];
   player: number;
+  playerRef: React.MutableRefObject<null>;
   getTop: (i: number) => string;
   getLeft?: (i: number) => string;
   getRight?: (i: number) => string;
@@ -39,7 +41,7 @@ const PlayerCards = ({
       >
         بازیکن شماره {player + 1} {isHakem && <CrownIcon />}
       </p>
-      <div className={classes.cards_wrapper}>
+      <div className={classes.cards_wrapper} ref={playerRef}>
         {playerRandomInitialCards?.map((pCard, index) => (
           <div
             key={`${pCard.rank}-${pCard.suit}`}

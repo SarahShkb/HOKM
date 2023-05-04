@@ -10,6 +10,7 @@ import { CardType } from "core/types";
 
 const UserCards = ({
   randomInitialCards,
+  playerRef,
   setRandomInitialCards,
   isHakem,
 }: {
@@ -17,6 +18,7 @@ const UserCards = ({
     cards: CardType[];
     hovered: boolean[];
   };
+  playerRef: React.MutableRefObject<null>;
   setRandomInitialCards: (
     rc: {
       cards: CardType[];
@@ -35,7 +37,7 @@ const UserCards = ({
   };
   return (
     <>
-      <div className={classes.cards_wrapper}>
+      <div className={classes.cards_wrapper} ref={playerRef}>
         {randomInitialCards.cards.map((p1card, index) => (
           <div
             key={`${p1card.rank}-${p1card.suit}`}
@@ -48,7 +50,7 @@ const UserCards = ({
               }px`,
               cursor: randomInitialCards.hovered[index] ? "pointer" : "initial",
               left: `${index * 15}px`,
-              transform: `rotate(${60 + (index - 12) * 10}deg)`,
+              transform: `rotate(${60 + (index - 13) * 10}deg)`,
             }}
             onMouseEnter={() => handlePlayer1CardHover(index, true)}
             onMouseLeave={() => handlePlayer1CardHover(index, false)}
