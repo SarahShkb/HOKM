@@ -79,11 +79,9 @@ const ChooseHokm = ({
         tempCards.splice(playerRandomCardIndex, 1);
       }
     }
-    console.log(tempCards);
     setPlayersCardsState([...tempPlayerCards]);
     setRemainingCards([...tempCards]);
   }, []);
-  console.log(playerCardsState);
 
   useEffect(() => {
     // if system has to choose hokm
@@ -111,15 +109,19 @@ const ChooseHokm = ({
               cards={playerCardsState[players.PLAYER_3].cards}
             />
             {!HOKM && hakem === players.PLAYER_1 && (
-              <div>
-                <ChooseHokmSuit handleChooseHokm={setHOKM} />
-              </div>
+              <ChooseHokmSuit handleChooseHokm={setHOKM} />
             )}
             {HOKM && (
               <div className={classes.play_button_wrapper}>
                 <button
                   className={classes.play_button}
-                  onClick={() => setGameState(GAME_STAGES.PLAY)}
+                  onClick={() =>
+                    setGameState(
+                      hakem === players.PLAYER_1
+                        ? GAME_STAGES.USER_TURN
+                        : GAME_STAGES.NPC
+                    )
+                  }
                 >
                   {"شروع بازی"}
                 </button>

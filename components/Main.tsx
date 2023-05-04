@@ -23,8 +23,6 @@ const Main = () => {
   const pileOfCards = useRef(null);
   const cardsRef = useRef([]);
 
-  console.log("ccc", playerCards);
-
   const GameComponent = (): JSX.Element => {
     switch (gameState) {
       case GAME_STAGES.CHOOSE_HAKEM:
@@ -55,7 +53,8 @@ const Main = () => {
             setPlayersCardsState={setPlayerCards}
           />
         );
-      case GAME_STAGES.PLAY:
+      case GAME_STAGES.NPC:
+      case GAME_STAGES.USER_TURN:
         return (
           <Play
             HOKM={HOKM}

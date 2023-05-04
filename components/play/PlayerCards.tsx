@@ -48,7 +48,7 @@ const PlayerCards = ({
               top: getTop(index),
               left: getLeft ? getLeft(index) : "initial",
               right: getRight ? getRight(index) : "initial",
-              transform: `rotate(${20 + (index - 4) * 10}deg)`,
+              transform: `rotate(${60 + (index - 12) * 10}deg)`,
             }}
           >
             <Card suit={pCard?.suit} rank={pCard?.rank} back />

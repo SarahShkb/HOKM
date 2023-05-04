@@ -20,8 +20,6 @@ const Play = ({
   playerCardsState,
   setPlayersCardsState,
 }: PlayHokmType) => {
-  // *handlers
-  console.log(remainingCards);
   //* pass other cards to players
   useEffect(() => {
     const tempPlayerCards: PlayerCardsStateType[] = playerCardsState;
@@ -41,8 +39,6 @@ const Play = ({
     setPlayersCardsState([...tempPlayerCards]);
   }, []);
 
-  console.log("wwww", playerCardsState);
-
   return (
     <div className={classes.bg_container}>
       <div className={classes.main_container}>
@@ -51,24 +47,24 @@ const Play = ({
           <>
             {HOKM !== null && <HokmSuit hokm={HOKM} />}
             <PlayerCards
-              playerRandomInitialCards={playerCardsState[3]?.cards}
+              playerRandomInitialCards={playerCardsState[2]?.cards}
               player={players.PLAYER_3}
               getTop={(index) => `${70 + index * 5}px`}
-              getLeft={(index) => `${index * 20}px`}
+              getLeft={(index) => `${index * 10}px`}
               isHakem={hakem === players.PLAYER_3}
             />
             <PlayerCards
-              playerRandomInitialCards={playerCardsState[2]?.cards}
+              playerRandomInitialCards={playerCardsState[1]?.cards}
               player={players.PLAYER_2}
               getTop={(index) => `calc(40% + ${index} * 5px)`}
-              getLeft={(index) => `calc(38% + ${index * 20}px)`}
+              getLeft={(index) => `calc(38% + ${index * 10}px)`}
               isHakem={hakem === players.PLAYER_2}
             />
             <PlayerCards
-              playerRandomInitialCards={playerCardsState[4]?.cards}
+              playerRandomInitialCards={playerCardsState[3]?.cards}
               player={players.PLAYER_4}
               getTop={(index) => `calc(40% + ${index} * 5px)`}
-              getLeft={(index) => `calc(-38% + ${index * 20}px)`}
+              getLeft={(index) => `calc(-38% + ${index * 10}px)`}
               labelStyle={{ left: "3rem" }}
               isHakem={hakem === players.PLAYER_4}
             />

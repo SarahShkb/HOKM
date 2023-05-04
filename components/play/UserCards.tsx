@@ -7,8 +7,6 @@ import CrownIcon from "assets/icons/Crown";
 import classes from "styles/components/chooseHokm/playerCards.module.scss";
 // types
 import { CardType } from "core/types";
-// constants
-import { players } from "core/constants";
 
 const UserCards = ({
   randomInitialCards,
@@ -28,7 +26,6 @@ const UserCards = ({
   isHakem?: boolean;
 }) => {
   // handler
-  console.log("aaaaaaaaa", randomInitialCards);
   const handlePlayer1CardHover = (index: number, hovered: boolean) => {
     setRandomInitialCards((prevState) => {
       let tempPlayer1CardsState = [...prevState];
@@ -45,11 +42,13 @@ const UserCards = ({
             className={classes.card}
             style={{
               bottom: `${
-                70 - index * 5 + (randomInitialCards.hovered[index] ? 50 : 0)
+                90 -
+                Math.abs(6 - index) * 6 +
+                (randomInitialCards.hovered[index] ? 50 : 0)
               }px`,
               cursor: randomInitialCards.hovered[index] ? "pointer" : "initial",
-              left: `${index * 20}px`,
-              transform: `rotate(${20 + (index - 12) * 10}deg)`,
+              left: `${index * 15}px`,
+              transform: `rotate(${60 + (index - 12) * 10}deg)`,
             }}
             onMouseEnter={() => handlePlayer1CardHover(index, true)}
             onMouseLeave={() => handlePlayer1CardHover(index, false)}

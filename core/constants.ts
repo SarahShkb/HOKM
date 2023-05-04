@@ -31,6 +31,9 @@ export const players = {
 export const GAME_STAGES = {
   CHOOSE_HAKEM: 0,
   CHOOSE_HOKM: 1,
-  CHOOSE_CARDS: 2,
-  PLAY: 3,
+  CHOOSE_CARDS: 2, // for 2players mode
+  NPC: 3, // none playable characters (it's not player1's turn)
+  USER_TURN: 4,
+  CALCULATION: 5,
+  END_GAME: 6,
 };
