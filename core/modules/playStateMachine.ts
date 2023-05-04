@@ -3,6 +3,20 @@ import { players } from "core/constants";
 // types
 import { CardType } from "core/types";
 
+const getCardValue = (
+  currnetCard: CardType,
+  currentSuit: number,
+  hokm: number
+): number => {
+  let amplifier = 1;
+  if (currnetCard.suit === hokm) {
+    amplifier = 1000;
+  } else if (currnetCard.suit === currentSuit) {
+    amplifier = 50;
+  }
+  return currnetCard.rank * amplifier;
+};
+
 // npc: none player character
 export const npcSelectCard = (
   cards: CardType[],
@@ -35,20 +49,6 @@ export const allowedAction = (
     }
   }
   return true;
-};
-
-const getCardValue = (
-  currnetCard: CardType,
-  currentSuit: number,
-  hokm: number
-): number => {
-  let amplifier = 1;
-  if (currnetCard.suit === hokm) {
-    amplifier = 1000;
-  } else if (currnetCard.suit === currentSuit) {
-    amplifier = 50;
-  }
-  return currnetCard.rank * amplifier;
 };
 
 // caution!!: always give currentCards ordered by playeys index enum

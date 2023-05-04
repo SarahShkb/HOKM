@@ -6,7 +6,9 @@ import HokmSuit from "components/general/HokmSuit";
 import PlayerCards from "components/play/PlayerCards";
 import UserCards from "components/play/UserCards";
 // types
-import { PlayHokmType, PlayerCardsStateType } from "core/types";
+import { PlayHokmType, PlayerCardsStateType, CardType } from "core/types";
+// helpers
+import { npcSelectCard } from "core/modules/playStateMachine";
 // styles
 import classes from "styles/components/chooseHokm/chooseHokm.module.scss";
 
@@ -21,6 +23,9 @@ const Play = ({
 }: PlayHokmType) => {
   // states
   const [starter, setStarter] = useState<number>(hakem);
+  const [currentSuit, setCurrentSuit] = useState<number>(HOKM);
+  // 4 cards in the center
+  const [cardsInPlay, setCardsInPlay] = useState<CardType[]>([]);
 
   //refs
   const player1Ref = useRef(null);
@@ -29,6 +34,7 @@ const Play = ({
   const player4Ref = useRef(null);
   const centerRef = useRef(null);
 
+  // methods
   // when choosing hokm, each user has 5 initial cards.
   // now we have to pass remaining 8 cards to each user.
   const passRemainingCards = () => {
@@ -47,6 +53,24 @@ const Play = ({
       }
     }
     setPlayersCardsState([...tempPlayerCards]);
+  };
+  // handlers
+  const handleNPCThrowCard = (player: number) => {
+    const selectedCard = npcSelectCard(
+      playerCardsState[player].cards,
+      currentSuit,
+      HOKM
+    );
+    setCurrentSuit(selectedCard.suit);
+    setPlayersCardsState((prevState: PlayerCardsStateType[]) => {
+      let tempPlayerCardsState: PlayerCardsStateType[] = { ...prevState };
+      const selectedCardIndex = tempPlayerCardsState[player].cards.findIndex(
+        (card) =>
+          card.suit === selectedCard.suit && card.rank === selectedCard.rank
+      );
+      tempPlayerCardsState[player].cards.splice(selectedCardIndex, 1);
+      return tempPlayerCardsState;
+    });
   };
 
   useEffect(() => {
