@@ -9,16 +9,19 @@ import classes from "styles/components/chooseHokm/playerCards.module.scss";
 import { CardType } from "core/types";
 
 const UserCards = ({
-  randomInitialCards,
+  cards,
   playerRef,
+  centerRef,
   setRandomInitialCards,
   isHakem,
+  isCurrentPlayer,
 }: {
-  randomInitialCards: {
+  cards: {
     cards: CardType[];
     hovered: boolean[];
   };
   playerRef: React.MutableRefObject<null>;
+  centerRef: React.MutableRefObject<null>;
   setRandomInitialCards: (
     rc: {
       cards: CardType[];
@@ -26,6 +29,7 @@ const UserCards = ({
     }[]
   ) => void;
   isHakem?: boolean;
+  isCurrentPlayer: boolean;
 }) => {
   // handler
   const handlePlayer1CardHover = (index: number, hovered: boolean) => {
@@ -38,17 +42,15 @@ const UserCards = ({
   return (
     <>
       <div className={classes.cards_wrapper} ref={playerRef}>
-        {randomInitialCards.cards.map((p1card, index) => (
+        {cards.cards.map((p1card, index) => (
           <div
             key={`${p1card.rank}-${p1card.suit}`}
             className={classes.card}
             style={{
               bottom: `${
-                90 -
-                Math.abs(6 - index) * 6 +
-                (randomInitialCards.hovered[index] ? 50 : 0)
+                90 - Math.abs(6 - index) * 6 + (cards.hovered[index] ? 50 : 0)
               }px`,
-              cursor: randomInitialCards.hovered[index] ? "pointer" : "initial",
+              cursor: cards.hovered[index] ? "pointer" : "initial",
               left: `${index * 15}px`,
               transform: `rotate(${60 + (index - 13) * 10}deg)`,
             }}

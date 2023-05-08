@@ -15,6 +15,7 @@ const Main = () => {
   const [HOKM, setHOKM] = useState<number>(null);
   const [remainingCards, setRemainingCards] = useState<CardType[]>(null);
   const [playerCards, setPlayerCards] = useState<PlayerCardsStateType[]>(null);
+  const [hand, setHand] = useState<number>(0);
 
   const player1Ref = useRef(null);
   const player2Ref = useRef(null);
@@ -55,6 +56,7 @@ const Main = () => {
         );
       case GAME_STAGES.NPC:
       case GAME_STAGES.USER_TURN:
+      case GAME_STAGES.CALCULATION:
         return (
           <Play
             HOKM={HOKM}
@@ -64,6 +66,8 @@ const Main = () => {
             remainingCards={remainingCards}
             playerCardsState={playerCards}
             setPlayersCardsState={setPlayerCards}
+            hand={hand}
+            setHand={setHand}
           />
         );
       default:

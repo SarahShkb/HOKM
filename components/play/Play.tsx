@@ -20,11 +20,17 @@ const Play = ({
   setGameState,
   playerCardsState,
   setPlayersCardsState,
+  hand,
+  setHand,
 }: PlayHokmType) => {
+  let initialized = false;
   // states
-  const [starter, setStarter] = useState<number>(hakem);
+  const [roundStarter, setRoundStarter] = useState<number>(null);
+  const [currentPlayer, setCurrentPlayer] = useState<number>(hakem);
   const [currentSuit, setCurrentSuit] = useState<number>(HOKM);
+  //const [current];
   // 4 cards in the center
+
   const [cardsInPlay, setCardsInPlay] = useState<CardType[]>([]);
 
   //refs
@@ -77,7 +83,7 @@ const Play = ({
     passRemainingCards();
     if (gameState === GAME_STAGES.NPC) {
       let playerRef = null;
-      switch (starter) {
+      switch (currentPlayer) {
         case players.PLAYER_2:
           playerRef = player2Ref;
           break;
@@ -90,9 +96,42 @@ const Play = ({
         default:
           break;
       }
+      setRoundStarter(hakem);
+      setCurrentPlayer((hakem + 1) % 4);
+      if (hand < 1) {
+        const threwedCard = handleNPCThrowCard(currentPlayer);
+      }
+      setHand(1);
     }
   }, []);
-  useState(() => {});
+  useEffect(() => {
+    if (hand > 0) {
+      setTimeout(() => {
+        if (gameState === GAME_STAGES.NPC) {
+          let playerRef = null;
+          switch (currentPlayer) {
+            case players.PLAYER_2:
+              playerRef = player2Ref;
+              break;
+            case players.PLAYER_3:
+              playerRef = player3Ref;
+              break;
+            case players.PLAYER_4:
+              playerRef = player4Ref;
+              break;
+            default:
+              break;
+          }
+          handleNPCThrowCard(currentPlayer);
+        }
+        setCurrentPlayer((c) => (c + 1) % 4);
+        if ((currentPlayer + 1) % 4 === roundStarter) {
+          setGameState(GAME_STAGES.CALCULATION);
+        }
+        setHand(2);
+      }, 1000);
+    }
+  }, [currentPlayer]);
 
   return (
     <div className={classes.bg_container}>
@@ -102,20 +141,24 @@ const Play = ({
           <>
             {HOKM !== null && <HokmSuit hokm={HOKM} />}
             <PlayerCards
-              playerRandomInitialCards={playerCardsState[2]?.cards}
+              playerCards={playerCardsState[2]?.cards}
               player={players.PLAYER_3}
               playerRef={player3Ref}
+              centerRef={centerRef}
               getTop={(index) => `${70 + index * 5}px`}
               getLeft={(index) => `${index * 10}px`}
               isHakem={hakem === players.PLAYER_3}
+              isCurrentPlayer={currentPlayer === players.PLAYER_3}
             />
             <PlayerCards
-              playerRandomInitialCards={playerCardsState[1]?.cards}
+              playerCards={playerCardsState[1]?.cards}
               player={players.PLAYER_2}
               playerRef={player2Ref}
+              centerRef={centerRef}
               getTop={(index) => `calc(40% + ${index} * 5px)`}
               getLeft={(index) => `calc(38% + ${index * 10}px)`}
               isHakem={hakem === players.PLAYER_2}
+              isCurrentPlayer={currentPlayer === players.PLAYER_2}
             />
             <div
               className={classes.center_div}
@@ -124,24 +167,27 @@ const Play = ({
                 position: "relative",
                 width: "100px",
                 height: "100px",
-                background: "gold",
                 margin: "auto",
               }}
             ></div>
             <PlayerCards
-              playerRandomInitialCards={playerCardsState[3]?.cards}
+              playerCards={playerCardsState[3]?.cards}
               player={players.PLAYER_4}
               playerRef={player4Ref}
+              centerRef={centerRef}
               getTop={(index) => `calc(40% + ${index} * 5px)`}
               getLeft={(index) => `calc(-38% + ${index * 10}px)`}
               labelStyle={{ left: "3rem" }}
               isHakem={hakem === players.PLAYER_4}
+              isCurrentPlayer={currentPlayer === players.PLAYER_4}
             />
             <UserCards
-              randomInitialCards={playerCardsState[0]}
+              cards={playerCardsState[0]}
               setRandomInitialCards={setPlayersCardsState}
               isHakem={hakem === players.PLAYER_1}
               playerRef={player1Ref}
+              centerRef={centerRef}
+              isCurrentPlayer={currentPlayer === players.PLAYER_1}
             />
           </>
         )}

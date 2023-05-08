@@ -41,4 +41,6 @@ export type PlayHokmType = {
   remainingCards: CardType[];
   playerCardsState: PlayerCardsStateType[];
   setPlayersCardsState: (pcs: PlayerCardsStateType[]) => void;
+  hand: number;
+  setHand: (h: number) => void;
 };
