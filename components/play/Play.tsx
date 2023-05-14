@@ -61,7 +61,7 @@ const Play = ({
     setPlayersCardsState([...tempPlayerCards]);
   };
   // handlers
-  const handleNPCThrowCard = (player: number) => {
+  const handleNPCThrowCard = (player: number): CardType => {
     const selectedCard = npcSelectCard(
       playerCardsState[player].cards,
       currentSuit,
@@ -77,6 +77,7 @@ const Play = ({
       tempPlayerCardsState[player].cards.splice(selectedCardIndex, 1);
       return tempPlayerCardsState;
     });
+    return selectedCard;
   };
 
   useEffect(() => {
@@ -90,14 +91,16 @@ const Play = ({
       // if (hand < 1) {
       //   handleNPCThrowCard(hakem);
       // }
-      handleNPCThrowCard(hakem);
+      const throwedCard = handleNPCThrowCard(hakem);
+      setCardsInPlay((prevArray) => [...prevArray, throwedCard]);
       //setHand(10);
     }
   }, []);
   useEffect(() => {
     //if (hand > 5) {
       setTimeout(() => {
-        handleNPCThrowCard(currentPlayer);
+        const throwedCard = handleNPCThrowCard(currentPlayer);
+        setCardsInPlay((prevArray) => [...prevArray, throwedCard]);
         setCurrentPlayer((c) =>
           (c + 1) % 4 === players.PLAYER_1 ? (c + 2) % 4 : (c + 1) % 4
         );
@@ -128,6 +131,7 @@ const Play = ({
               getLeft={(index) => `${index * 10}px`}
               isHakem={hakem === players.PLAYER_3}
               isCurrentPlayer={currentPlayer === players.PLAYER_3}
+              cardsInPlay={cardsInPlay}
             />
             <PlayerCards
               playerCards={playerCardsState[1]?.cards}
@@ -138,6 +142,7 @@ const Play = ({
               getLeft={(index) => `calc(38% + ${index * 10}px)`}
               isHakem={hakem === players.PLAYER_2}
               isCurrentPlayer={currentPlayer === players.PLAYER_2}
+              cardsInPlay={cardsInPlay}
             />
             {gameState === GAME_STAGES.USER_TURN && (
               <p style={{ margin: "auto" }}>نوبت شماست!</p>
@@ -162,6 +167,7 @@ const Play = ({
               labelStyle={{ left: "3rem" }}
               isHakem={hakem === players.PLAYER_4}
               isCurrentPlayer={currentPlayer === players.PLAYER_4}
+              cardsInPlay={cardsInPlay}
             />
             <UserCards
               cards={playerCardsState[0]}

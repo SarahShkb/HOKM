@@ -24,6 +24,7 @@ const PlayerCards = ({
   isHakem,
   isCurrentPlayer,
   centerRef,
+  cardsInPlay
 }: {
   playerCards: CardType[];
   player: number;
@@ -35,6 +36,7 @@ const PlayerCards = ({
   labelStyle?: React.CSSProperties;
   isHakem?: boolean;
   isCurrentPlayer: boolean;
+  cardsInPlay: CardType[]
 }) => {
   const cardRef = useRef(null);
   // states
@@ -85,8 +87,8 @@ const PlayerCards = ({
               }
             >
               <Card
-                suit={pCard?.suit}
-                rank={pCard?.rank}
+                suit={isCurrentPlayer && index === randomCardIndex ? cardsInPlay[cardsInPlay?.length - 1]?.suit : pCard?.suit}
+                rank={isCurrentPlayer && index === randomCardIndex ? cardsInPlay[cardsInPlay?.length - 1]?.rank : pCard?.rank}
                 back={!(isCurrentPlayer && index === randomCardIndex)}
               />
             </div>
