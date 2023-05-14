@@ -43,7 +43,7 @@ const PlayerCards = ({
     if (isCurrentPlayer) {
       setTimeout(() => {
         setRandomCardIndex(Math.floor(Math.random() * playerCards.length));
-      }, 300);
+      }, 1000);
     }
   }, [isCurrentPlayer]);
   return (
@@ -57,38 +57,40 @@ const PlayerCards = ({
         بازیکن شماره {player + 1} {isHakem && <CrownIcon />}
       </p>
       <div className={classes.cards_wrapper} ref={playerRef}>
-        {playerCards?.map((pCard, index) => (
-          <div
-            key={`${pCard.rank}-${pCard.suit}`}
-            className={classes.card}
-            ref={index === randomCardIndex ? cardRef : null}
-            style={
-              isCurrentPlayer && index === randomCardIndex
-                ? {
-                    top:
-                      centerRef?.current?.offsetTop *
-                      (cardRef?.current?.offsetTop < 50 ? 0.6 : 1),
-                    left:
-                      centerRef?.current?.offsetLeft / 2 -
-                      (cardRef?.current?.offsetTop < 50 ? 0 : player * 60),
+        {playerCards?.map((pCard, index) => {
+          return (
+            <div
+              key={`${pCard.rank}-${pCard.suit}`}
+              className={classes.card}
+              ref={index === randomCardIndex ? cardRef : null}
+              style={
+                isCurrentPlayer && index === randomCardIndex
+                  ? {
+                      top:
+                        centerRef?.current?.offsetTop *
+                        (cardRef?.current?.offsetTop < 50 ? 0.6 : 1),
+                      left:
+                        centerRef?.current?.offsetLeft / 2 -
+                        (cardRef?.current?.offsetTop < 50 ? 0 : player * 60),
 
-                    transition: "all 0.3s ease-in-out",
-                  }
-                : {
-                    top: getTop(index),
-                    left: getLeft ? getLeft(index) : "initial",
-                    right: getRight ? getRight(index) : "initial",
-                    transform: `rotate(${60 + (index - 12) * 10}deg)`,
-                  }
-            }
-          >
-            <Card
-              suit={pCard?.suit}
-              rank={pCard?.rank}
-              back={!(isCurrentPlayer && index === randomCardIndex)}
-            />
-          </div>
-        ))}
+                      transition: "all 0.3s ease-in-out",
+                    }
+                  : {
+                      top: getTop(index),
+                      left: getLeft ? getLeft(index) : "initial",
+                      right: getRight ? getRight(index) : "initial",
+                      transform: `rotate(${60 + (index - 12) * 10}deg)`,
+                    }
+              }
+            >
+              <Card
+                suit={pCard?.suit}
+                rank={pCard?.rank}
+                back={!(isCurrentPlayer && index === randomCardIndex)}
+              />
+            </div>
+          );
+        })}
       </div>
     </>
   );

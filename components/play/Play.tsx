@@ -67,7 +67,7 @@ const Play = ({
       currentSuit,
       HOKM
     );
-    setCurrentSuit(selectedCard.suit);
+    //setCurrentSuit(selectedCard.suit);
     setPlayersCardsState((prevState: PlayerCardsStateType[]) => {
       let tempPlayerCardsState: PlayerCardsStateType[] = { ...prevState };
       const selectedCardIndex = tempPlayerCardsState[player].cards.findIndex(
@@ -82,56 +82,35 @@ const Play = ({
   useEffect(() => {
     passRemainingCards();
     if (gameState === GAME_STAGES.NPC) {
-      let playerRef = null;
-      switch (currentPlayer) {
-        case players.PLAYER_2:
-          playerRef = player2Ref;
-          break;
-        case players.PLAYER_3:
-          playerRef = player3Ref;
-          break;
-        case players.PLAYER_4:
-          playerRef = player4Ref;
-          break;
-        default:
-          break;
-      }
       setRoundStarter(hakem);
-      setCurrentPlayer((hakem + 1) % 4);
-      if (hand < 1) {
-        const threwedCard = handleNPCThrowCard(currentPlayer);
-      }
-      setHand(1);
+      //setCurrentPlayer(hakem);
+      // if ((hakem + 1) % 4 === players.PLAYER_1) {
+      //   setGameState(GAME_STAGES.USER_TURN);
+      // }
+      // if (hand < 1) {
+      //   handleNPCThrowCard(hakem);
+      // }
+      //handleNPCThrowCard(hakem);
+      setHand(10);
     }
   }, []);
   useEffect(() => {
-    if (hand > 0) {
+    if (hand > 5) {
       setTimeout(() => {
-        if (gameState === GAME_STAGES.NPC) {
-          let playerRef = null;
-          switch (currentPlayer) {
-            case players.PLAYER_2:
-              playerRef = player2Ref;
-              break;
-            case players.PLAYER_3:
-              playerRef = player3Ref;
-              break;
-            case players.PLAYER_4:
-              playerRef = player4Ref;
-              break;
-            default:
-              break;
-          }
-          handleNPCThrowCard(currentPlayer);
-        }
-        setCurrentPlayer((c) => (c + 1) % 4);
-        if ((currentPlayer + 1) % 4 === roundStarter) {
-          setGameState(GAME_STAGES.CALCULATION);
-        }
-        setHand(2);
+        //handleNPCThrowCard(currentPlayer);
+        setCurrentPlayer((c) =>
+          (c + 1) % 4 === players.PLAYER_1 ? (c + 2) % 4 : (c + 1) % 4
+        );
+        // if ((currentPlayer + 1) % 4 === roundStarter) {
+        //   setGameState(GAME_STAGES.CALCULATION);
+        // }
+        //setHand(2);
       }, 1000);
+      // } else {
+      //   if (gameState === GAME_STAGES.USER_TURN) {
+      //   }
     }
-  }, [currentPlayer]);
+  }, [currentPlayer, hand]);
 
   return (
     <div className={classes.bg_container}>
@@ -160,6 +139,9 @@ const Play = ({
               isHakem={hakem === players.PLAYER_2}
               isCurrentPlayer={currentPlayer === players.PLAYER_2}
             />
+            {gameState === GAME_STAGES.USER_TURN && (
+              <p style={{ margin: "auto" }}>نوبت شماست!</p>
+            )}
             <div
               className={classes.center_div}
               ref={centerRef}
