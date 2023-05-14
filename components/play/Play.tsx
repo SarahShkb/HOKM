@@ -83,21 +83,21 @@ const Play = ({
     passRemainingCards();
     if (gameState === GAME_STAGES.NPC) {
       setRoundStarter(hakem);
-      //setCurrentPlayer(hakem);
+      setCurrentPlayer(hakem);
       // if ((hakem + 1) % 4 === players.PLAYER_1) {
       //   setGameState(GAME_STAGES.USER_TURN);
       // }
       // if (hand < 1) {
       //   handleNPCThrowCard(hakem);
       // }
-      //handleNPCThrowCard(hakem);
-      setHand(10);
+      handleNPCThrowCard(hakem);
+      //setHand(10);
     }
   }, []);
   useEffect(() => {
-    if (hand > 5) {
+    //if (hand > 5) {
       setTimeout(() => {
-        //handleNPCThrowCard(currentPlayer);
+        handleNPCThrowCard(currentPlayer);
         setCurrentPlayer((c) =>
           (c + 1) % 4 === players.PLAYER_1 ? (c + 2) % 4 : (c + 1) % 4
         );
@@ -109,8 +109,8 @@ const Play = ({
       // } else {
       //   if (gameState === GAME_STAGES.USER_TURN) {
       //   }
-    }
-  }, [currentPlayer, hand]);
+    //}
+  }, [currentPlayer]);
 
   return (
     <div className={classes.bg_container}>

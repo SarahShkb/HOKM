@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { digitsEnToFa } from "@persian-tools/persian-tools";
 // components
 import Card from "components/general/Card";
 // icons
@@ -43,7 +44,7 @@ const PlayerCards = ({
     if (isCurrentPlayer) {
       setTimeout(() => {
         setRandomCardIndex(Math.floor(Math.random() * playerCards.length));
-      }, 1000);
+      }, 990);
     }
   }, [isCurrentPlayer]);
   return (
@@ -54,7 +55,7 @@ const PlayerCards = ({
       ${player === players.PLAYER_3 && classes.label3}`}
         style={labelStyle}
       >
-        بازیکن شماره {player + 1} {isHakem && <CrownIcon />}
+        بازیکن شماره {digitsEnToFa(player + 1)} {isHakem && <CrownIcon />}
       </p>
       <div className={classes.cards_wrapper} ref={playerRef}>
         {playerCards?.map((pCard, index) => {

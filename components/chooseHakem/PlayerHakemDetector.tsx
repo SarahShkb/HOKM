@@ -1,4 +1,5 @@
 import React from "react";
+import { digitsEnToFa } from "@persian-tools/persian-tools";
 // components
 import Card from "components/general/Card";
 // styles
@@ -28,7 +29,7 @@ const HakemPlayerDetector = ({
       ${player === players.PLAYER_3 && classes.label3}`}
       style={labelStyle}
     >
-      بازیکن شماره {player + 1}
+      بازیکن شماره {digitsEnToFa(player + 1)}
     </p>
     <div
       className={`${classes.hakem_detector_card} ${

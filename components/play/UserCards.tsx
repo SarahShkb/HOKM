@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { digitsEnToFa } from "@persian-tools/persian-tools";
 // components
 import Card from "components/general/Card";
 // icons
@@ -62,7 +63,7 @@ const UserCards = ({
         ))}
       </div>
       <p className={`${classes.label} ${classes.label1}`}>
-        بازیکن شماره۱ {isHakem && <CrownIcon />}
+        بازیکن شماره {digitsEnToFa(1)} {isHakem && <CrownIcon />}
       </p>
     </>
   );
