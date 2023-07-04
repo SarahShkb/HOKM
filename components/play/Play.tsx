@@ -98,21 +98,26 @@ const Play = ({
   }, []);
   useEffect(() => {
     //if (hand > 5) {
+    if (gameState === GAME_STAGES.NPC) {
+      console.log(currentPlayer);
       setTimeout(() => {
+        console.log("pc");
         const throwedCard = handleNPCThrowCard(currentPlayer);
         setCardsInPlay((prevArray) => [...prevArray, throwedCard]);
-        setCurrentPlayer((c) =>
-          (c + 1) % 4 === players.PLAYER_1 ? (c + 2) % 4 : (c + 1) % 4
-        );
+        setCurrentPlayer((c) => (c + 1) % 4);
+        if ((currentPlayer + 1) % 4 === players.PLAYER_1) {
+          setGameState(GAME_STAGES.USER_TURN);
+        }
         // if ((currentPlayer + 1) % 4 === roundStarter) {
         //   setGameState(GAME_STAGES.CALCULATION);
         // }
         //setHand(2);
       }, 1000);
-      // } else {
-      //   if (gameState === GAME_STAGES.USER_TURN) {
-      //   }
-    //}
+    } else {
+      if (gameState === GAME_STAGES.USER_TURN) {
+        console.log("user");
+      }
+    }
   }, [currentPlayer]);
 
   return (
@@ -170,7 +175,7 @@ const Play = ({
               cardsInPlay={cardsInPlay}
             />
             <UserCards
-              cards={playerCardsState[0]}
+              cards={playerCardsState}
               setRandomInitialCards={setPlayersCardsState}
               isHakem={hakem === players.PLAYER_1}
               playerRef={player1Ref}

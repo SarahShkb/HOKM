@@ -8,6 +8,7 @@ import CrownIcon from "assets/icons/Crown";
 import classes from "styles/components/chooseHokm/playerCards.module.scss";
 // types
 import { CardType } from "core/types";
+import { players } from "core/constants";
 
 const UserCards = ({
   cards,
@@ -20,7 +21,7 @@ const UserCards = ({
   cards: {
     cards: CardType[];
     hovered: boolean[];
-  };
+  }[];
   playerRef: React.MutableRefObject<null>;
   centerRef: React.MutableRefObject<null>;
   setRandomInitialCards: (
@@ -34,24 +35,29 @@ const UserCards = ({
 }) => {
   // handler
   const handlePlayer1CardHover = (index: number, hovered: boolean) => {
+    console.log(cards);
     setRandomInitialCards((prevState) => {
-      let tempPlayer1CardsState = [...prevState];
-      tempPlayer1CardsState[0].hovered[index] = hovered;
+      let tempPlayer1CardsState = [...Object.values(prevState)];
+      tempPlayer1CardsState[players.PLAYER_1].hovered[index] = hovered;
       return tempPlayer1CardsState;
     });
   };
   return (
     <>
       <div className={classes.cards_wrapper} ref={playerRef}>
-        {cards.cards.map((p1card, index) => (
+        {cards[players.PLAYER_1].cards.map((p1card, index) => (
           <div
             key={`${p1card.rank}-${p1card.suit}`}
             className={classes.card}
             style={{
               bottom: `${
-                90 - Math.abs(6 - index) * 6 + (cards.hovered[index] ? 50 : 0)
+                90 -
+                Math.abs(6 - index) * 6 +
+                (cards[players.PLAYER_1].hovered[index] ? 50 : 0)
               }px`,
-              cursor: cards.hovered[index] ? "pointer" : "initial",
+              cursor: cards[players.PLAYER_1].hovered[index]
+                ? "pointer"
+                : "initial",
               left: `${index * 15}px`,
               transform: `rotate(${60 + (index - 13) * 10}deg)`,
             }}
