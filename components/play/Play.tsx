@@ -79,6 +79,22 @@ const Play = ({
     });
     return selectedCard;
   };
+  const handleUserCardClick = (clickedCard: CardType): void => {
+    setPlayersCardsState((prevState: PlayerCardsStateType[]) => {
+      let tempPlayerCardsState: PlayerCardsStateType[] = { ...prevState };
+      const selectedCardIndex = tempPlayerCardsState[
+        players.PLAYER_1
+      ].cards.findIndex(
+        (card) =>
+          card.suit === clickedCard.suit && card.rank === clickedCard.rank
+      );
+      tempPlayerCardsState[players.PLAYER_1].cards.splice(selectedCardIndex, 1);
+      return tempPlayerCardsState;
+    });
+    setCardsInPlay((prevArray) => [...prevArray, clickedCard]);
+    setCurrentPlayer((c) => (c + 1) % 4);
+    setGameState(GAME_STAGES.NPC);
+  };
 
   useEffect(() => {
     passRemainingCards();
@@ -181,6 +197,7 @@ const Play = ({
               playerRef={player1Ref}
               centerRef={centerRef}
               isCurrentPlayer={currentPlayer === players.PLAYER_1}
+              handleCardClick={handleUserCardClick}
             />
           </>
         )}

@@ -17,6 +17,7 @@ const UserCards = ({
   setRandomInitialCards,
   isHakem,
   isCurrentPlayer,
+  handleCardClick,
 }: {
   cards: {
     cards: CardType[];
@@ -32,6 +33,7 @@ const UserCards = ({
   ) => void;
   isHakem?: boolean;
   isCurrentPlayer: boolean;
+  handleCardClick: (clickedCard: CardType) => void;
 }) => {
   // handler
   const handlePlayer1CardHover = (index: number, hovered: boolean) => {
@@ -63,6 +65,7 @@ const UserCards = ({
             }}
             onMouseEnter={() => handlePlayer1CardHover(index, true)}
             onMouseLeave={() => handlePlayer1CardHover(index, false)}
+            onClick={() => handleCardClick(p1card)}
           >
             <Card suit={p1card?.suit} rank={p1card?.rank} />
           </div>
