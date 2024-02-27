@@ -37,7 +37,6 @@ const UserCards = ({
 }) => {
   // handler
   const handlePlayer1CardHover = (index: number, hovered: boolean) => {
-    console.log(cards);
     setRandomInitialCards((prevState) => {
       let tempPlayer1CardsState = [...Object.values(prevState)];
       tempPlayer1CardsState[players.PLAYER_1].hovered[index] = hovered;

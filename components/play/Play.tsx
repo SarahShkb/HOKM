@@ -8,9 +8,13 @@ import UserCards from "components/play/UserCards";
 // types
 import { PlayHokmType, PlayerCardsStateType, CardType } from "core/types";
 // helpers
-import { npcSelectCard } from "core/modules/playStateMachine";
+import {
+  currentRoundWinner,
+  npcSelectCard,
+} from "core/modules/playStateMachine";
 // styles
 import classes from "styles/components/chooseHokm/chooseHokm.module.scss";
+import Card from "components/general/Card";
 
 const Play = ({
   HOKM,
@@ -24,6 +28,12 @@ const Play = ({
   setHand,
 }: PlayHokmType) => {
   let initialized = false;
+  const cardsInPlayPositions = [
+    { top: 80, left: 55 },
+    { top: 30, left: 152 },
+    { top: -65, left: 55 },
+    { top: 30, left: -43 },
+  ];
   // states
   const [roundStarter, setRoundStarter] = useState<number>(null);
   const [currentPlayer, setCurrentPlayer] = useState<number>(hakem);
@@ -91,7 +101,11 @@ const Play = ({
       tempPlayerCardsState[players.PLAYER_1].cards.splice(selectedCardIndex, 1);
       return tempPlayerCardsState;
     });
-    setCardsInPlay((prevArray) => [...prevArray, clickedCard]);
+    setCardsInPlay((prevArray) => {
+      let temp = [...prevArray];
+      temp[players.PLAYER_1] = clickedCard;
+      return temp;
+    });
     setCurrentPlayer((c) => (c + 1) % 4);
     setGameState(GAME_STAGES.NPC);
   };
@@ -108,30 +122,46 @@ const Play = ({
       //   handleNPCThrowCard(hakem);
       // }
       const throwedCard = handleNPCThrowCard(hakem);
-      setCardsInPlay((prevArray) => [...prevArray, throwedCard]);
+      setCardsInPlay((prevArray) => {
+        let temp = [...prevArray];
+        temp[hakem] = throwedCard;
+        return temp;
+      });
       //setHand(10);
     }
   }, []);
   useEffect(() => {
     //if (hand > 5) {
     if (gameState === GAME_STAGES.NPC) {
-      console.log(currentPlayer);
       setTimeout(() => {
-        console.log("pc");
         const throwedCard = handleNPCThrowCard(currentPlayer);
-        setCardsInPlay((prevArray) => [...prevArray, throwedCard]);
+        setCardsInPlay((prevArray) => {
+          let temp = [...prevArray];
+          temp[currentPlayer] = throwedCard;
+          return temp;
+        });
         setCurrentPlayer((c) => (c + 1) % 4);
         if ((currentPlayer + 1) % 4 === players.PLAYER_1) {
           setGameState(GAME_STAGES.USER_TURN);
         }
-        // if ((currentPlayer + 1) % 4 === roundStarter) {
-        //   setGameState(GAME_STAGES.CALCULATION);
-        // }
+        console.log(roundStarter, (currentPlayer + 1) % 4);
+        if ((currentPlayer + 1) % 4 === roundStarter) {
+          setGameState(GAME_STAGES.CALCULATION);
+        }
         //setHand(2);
       }, 1000);
     } else {
       if (gameState === GAME_STAGES.USER_TURN) {
         console.log("user");
+      } else {
+        if (gameState === GAME_STAGES.CALCULATION) {
+          const roundWinner = currentRoundWinner(
+            cardsInPlay,
+            currentSuit,
+            HOKM
+          );
+          console.log(roundWinner);
+        }
       }
     }
   }, [currentPlayer]);
@@ -166,7 +196,16 @@ const Play = ({
               cardsInPlay={cardsInPlay}
             />
             {gameState === GAME_STAGES.USER_TURN && (
-              <p style={{ margin: "auto" }}>نوبت شماست!</p>
+              <p
+                style={{
+                  position: "absolute",
+                  margin: "auto",
+                  marginTop: "43%",
+                  marginRight: "35%",
+                }}
+              >
+                نوبت شماست!
+              </p>
             )}
             <div
               className={classes.center_div}
@@ -177,7 +216,25 @@ const Play = ({
                 height: "100px",
                 margin: "auto",
               }}
-            ></div>
+            >
+              {cardsInPlay.map((cardInPlay, index) => (
+                <>
+                  {cardInPlay && (
+                    <div
+                      key={`${cardInPlay.rank}-${cardInPlay.suit}`}
+                      className={classes.card}
+                      style={{
+                        position: "absolute",
+                        top: cardsInPlayPositions[index].top,
+                        left: cardsInPlayPositions[index].left,
+                      }}
+                    >
+                      <Card suit={cardInPlay.suit} rank={cardInPlay.rank} />
+                    </div>
+                  )}
+                </>
+              ))}
+            </div>
             <PlayerCards
               playerCards={playerCardsState[3]?.cards}
               player={players.PLAYER_4}
