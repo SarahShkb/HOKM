@@ -15,6 +15,7 @@ import {
 // styles
 import classes from "styles/components/chooseHokm/chooseHokm.module.scss";
 import Card from "components/general/Card";
+import Scores from "components/general/Scores";
 
 const Play = ({
   HOKM,
@@ -27,7 +28,7 @@ const Play = ({
   hand,
   setHand,
 }: PlayHokmType) => {
-  let initialized = false;
+  // consts
   const cardsInPlayPositions = [
     { top: 80, left: 55 },
     { top: 30, left: 152 },
@@ -38,11 +39,9 @@ const Play = ({
   const [roundStarter, setRoundStarter] = useState<number>(null);
   const [currentPlayer, setCurrentPlayer] = useState<number>(hakem);
   const [currentSuit, setCurrentSuit] = useState<number>(HOKM);
-  //const [current];
+  const [teamsScores, setTeamsScores] = useState<[number, number]>([0, 0]);
   // 4 cards in the center
-
   const [cardsInPlay, setCardsInPlay] = useState<CardType[]>([]);
-
   //refs
   const player1Ref = useRef(null);
   const player2Ref = useRef(null);
@@ -72,6 +71,7 @@ const Play = ({
   };
   // handlers
   const handleNPCThrowCard = (player: number): CardType => {
+    console.log("npc throw");
     const selectedCard = npcSelectCard(
       playerCardsState[player].cards,
       currentSuit,
@@ -106,9 +106,13 @@ const Play = ({
       temp[players.PLAYER_1] = clickedCard;
       return temp;
     });
+    if ((currentPlayer + 1) % 4 === roundStarter) {
+      setGameState(GAME_STAGES.CALCULATION);
+    } else setGameState(GAME_STAGES.NPC);
     setCurrentPlayer((c) => (c + 1) % 4);
-    setGameState(GAME_STAGES.NPC);
   };
+
+  console.log(cardsInPlay);
 
   useEffect(() => {
     passRemainingCards();
@@ -144,7 +148,6 @@ const Play = ({
         if ((currentPlayer + 1) % 4 === players.PLAYER_1) {
           setGameState(GAME_STAGES.USER_TURN);
         }
-        console.log(roundStarter, (currentPlayer + 1) % 4);
         if ((currentPlayer + 1) % 4 === roundStarter) {
           setGameState(GAME_STAGES.CALCULATION);
         }
@@ -160,6 +163,11 @@ const Play = ({
             currentSuit,
             HOKM
           );
+          setTeamsScores((prev) => {
+            let temp = [...prev];
+            temp[roundWinner % 2] = temp[roundWinner % 2] += 1;
+            return temp;
+          });
           console.log(roundWinner);
         }
       }
@@ -173,6 +181,9 @@ const Play = ({
         {playerCardsState && (
           <>
             {HOKM !== null && <HokmSuit hokm={HOKM} />}
+            <div style={{ position: "absolute", top: 0, left: 30 }}>
+              <Scores team1_3={teamsScores[0]} team2_4={teamsScores[1]} />
+            </div>
             <PlayerCards
               playerCards={playerCardsState[2]?.cards}
               player={players.PLAYER_3}

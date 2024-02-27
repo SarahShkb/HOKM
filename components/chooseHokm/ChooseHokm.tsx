@@ -13,6 +13,7 @@ import { getCards } from "core/modules/generalHelperFunctions";
 // styles
 import classes from "styles/components/chooseHokm/chooseHokm.module.scss";
 import { CardType } from "core/types";
+import Scores from "components/general/Scores";
 
 const ChooseHokm = ({
   HOKM,
