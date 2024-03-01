@@ -112,30 +112,16 @@ const Play = ({
     setCurrentPlayer((c) => (c + 1) % 4);
   };
 
-  console.log(cardsInPlay);
-
   useEffect(() => {
     passRemainingCards();
-    if (gameState === GAME_STAGES.NPC) {
-      setRoundStarter(hakem);
-      setCurrentPlayer(hakem);
-      // if ((hakem + 1) % 4 === players.PLAYER_1) {
-      //   setGameState(GAME_STAGES.USER_TURN);
-      // }
-      // if (hand < 1) {
-      //   handleNPCThrowCard(hakem);
-      // }
-      const throwedCard = handleNPCThrowCard(hakem);
-      setCardsInPlay((prevArray) => {
-        let temp = [...prevArray];
-        temp[hakem] = throwedCard;
-        return temp;
-      });
-      //setHand(10);
+    if (hakem % 4 === players.PLAYER_1) {
+      setGameState(GAME_STAGES.USER_TURN);
+    } else {
+      setGameState(GAME_STAGES.NPC);
     }
+    setRoundStarter(hakem);
   }, []);
   useEffect(() => {
-    //if (hand > 5) {
     if (gameState === GAME_STAGES.NPC) {
       setTimeout(() => {
         const throwedCard = handleNPCThrowCard(currentPlayer);
@@ -151,11 +137,9 @@ const Play = ({
         if ((currentPlayer + 1) % 4 === roundStarter) {
           setGameState(GAME_STAGES.CALCULATION);
         }
-        //setHand(2);
-      }, 1000);
+      }, 2000);
     } else {
       if (gameState === GAME_STAGES.USER_TURN) {
-        console.log("user");
       } else {
         if (gameState === GAME_STAGES.CALCULATION) {
           const roundWinner = currentRoundWinner(
@@ -168,7 +152,16 @@ const Play = ({
             temp[roundWinner % 2] = temp[roundWinner % 2] += 1;
             return temp;
           });
-          console.log(roundWinner);
+          setGameState(
+            roundWinner === players.PLAYER_1
+              ? GAME_STAGES.USER_TURN
+              : GAME_STAGES.NPC
+          );
+          setTimeout(() => {
+            setCardsInPlay([]);
+          }, 2000);
+          setRoundStarter(roundWinner);
+          setCurrentPlayer(roundWinner);
         }
       }
     }
@@ -193,6 +186,7 @@ const Play = ({
               getLeft={(index) => `${index * 10}px`}
               isHakem={hakem === players.PLAYER_3}
               isCurrentPlayer={currentPlayer === players.PLAYER_3}
+              gameState={gameState}
               cardsInPlay={cardsInPlay}
             />
             <PlayerCards
@@ -204,6 +198,7 @@ const Play = ({
               getLeft={(index) => `calc(38% + ${index * 10}px)`}
               isHakem={hakem === players.PLAYER_2}
               isCurrentPlayer={currentPlayer === players.PLAYER_2}
+              gameState={gameState}
               cardsInPlay={cardsInPlay}
             />
             {gameState === GAME_STAGES.USER_TURN && (
@@ -232,6 +227,7 @@ const Play = ({
                 <>
                   {cardInPlay && (
                     <div
+                      id="card_in_play"
                       key={`${cardInPlay.rank}-${cardInPlay.suit}`}
                       className={classes.card}
                       style={{
@@ -256,6 +252,7 @@ const Play = ({
               labelStyle={{ left: "3rem" }}
               isHakem={hakem === players.PLAYER_4}
               isCurrentPlayer={currentPlayer === players.PLAYER_4}
+              gameState={gameState}
               cardsInPlay={cardsInPlay}
             />
             <UserCards

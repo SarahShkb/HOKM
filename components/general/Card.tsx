@@ -13,7 +13,7 @@ import DiamondsIcon from "assets/icons/Diamonds";
 // styles
 import classes from "styles/components/general/card.module.scss";
 
-const Card = ({ suit, rank, back }: CardType): JSX.Element => {
+const Card = ({ suit, rank, back, owner }: CardType): JSX.Element => {
   const IconComponent = (): JSX.Element => {
     switch (suit) {
       case suits.SPADES:
@@ -45,6 +45,7 @@ const Card = ({ suit, rank, back }: CardType): JSX.Element => {
             </div>
           </div>
           <div className={classes.suit}>
+            {owner && `p:${owner}`}
             <IconComponent />
           </div>
           <div className={`${classes.rank} ${classes.bottom}`}>

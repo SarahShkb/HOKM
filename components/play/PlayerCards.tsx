@@ -9,7 +9,7 @@ import classes from "styles/components/chooseHokm/playerCards.module.scss";
 // types
 import { CardType } from "core/types";
 // constants
-import { players } from "core/constants";
+import { GAME_STAGES, players } from "core/constants";
 // modules
 import { getCards } from "core/modules/generalHelperFunctions";
 
@@ -23,8 +23,9 @@ const PlayerCards = ({
   labelStyle,
   isHakem,
   isCurrentPlayer,
+  gameState,
   centerRef,
-  cardsInPlay
+  cardsInPlay,
 }: {
   playerCards: CardType[];
   player: number;
@@ -36,17 +37,24 @@ const PlayerCards = ({
   labelStyle?: React.CSSProperties;
   isHakem?: boolean;
   isCurrentPlayer: boolean;
-  cardsInPlay: CardType[]
+  gameState?: number;
+  cardsInPlay: CardType[];
 }) => {
+  const cardsInPlayPositions = [
+    { top: 80, left: 55 },
+    { top: 30, left: 152 },
+    { top: -65, left: 55 },
+    { top: 30, left: -43 },
+  ];
   const cardRef = useRef(null);
   // states
   const [randomCardIndex, setRandomCardIndex] = useState<number>(null);
 
   useEffect(() => {
-    if (isCurrentPlayer) {
+    if (isCurrentPlayer && gameState === GAME_STAGES.NPC) {
       setTimeout(() => {
         setRandomCardIndex(Math.floor(Math.random() * playerCards.length));
-      }, 990);
+      }, 1990);
     }
   }, [isCurrentPlayer]);
   return (
@@ -69,13 +77,8 @@ const PlayerCards = ({
               style={
                 isCurrentPlayer && index === randomCardIndex
                   ? {
-                      top:
-                        centerRef?.current?.offsetTop *
-                        (cardRef?.current?.offsetTop < 50 ? 0.6 : 1),
-                      left:
-                        centerRef?.current?.offsetLeft / 2 -
-                        (cardRef?.current?.offsetTop < 50 ? 0 : player * 60),
-
+                      top: `${cardsInPlayPositions[player]}px`,
+                      left: `${cardsInPlayPositions[player]}px`,
                       transition: "all 0.3s ease-in-out",
                     }
                   : {
@@ -87,9 +90,20 @@ const PlayerCards = ({
               }
             >
               <Card
-                suit={isCurrentPlayer && index === randomCardIndex ? cardsInPlay[cardsInPlay?.length - 1]?.suit : pCard?.suit}
-                rank={isCurrentPlayer && index === randomCardIndex ? cardsInPlay[cardsInPlay?.length - 1]?.rank : pCard?.rank}
-                back={!(isCurrentPlayer && index === randomCardIndex)}
+                suit={
+                  isCurrentPlayer && index === randomCardIndex
+                    ? cardsInPlay[cardsInPlay?.length - 1]?.suit
+                    : pCard?.suit
+                }
+                rank={
+                  isCurrentPlayer && index === randomCardIndex
+                    ? cardsInPlay[cardsInPlay?.length - 1]?.rank
+                    : pCard?.rank
+                }
+                back={
+                  !(isCurrentPlayer && index === randomCardIndex) ||
+                  gameState === GAME_STAGES.CALCULATION
+                }
               />
             </div>
           );
